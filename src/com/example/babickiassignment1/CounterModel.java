@@ -8,13 +8,17 @@ public class CounterModel {
 	private String name;
 	
 	// date info for counter
-	private ArrayList<CounterDate> date;
-
+	private ArrayList<CounterDate> datesList;
+	
 	// constructor
-	public CounterModel(String name, ArrayList<CounterDate> date) {
+	public CounterModel(String name) {
 		super();
 		this.name = name;
-		this.date = date;
+		this.datesList = new ArrayList<CounterDate>();
+	}
+	
+	public void AddCount(){
+		
 	}
 
 	// getters and setters
@@ -27,11 +31,11 @@ public class CounterModel {
 	}
 
 	public ArrayList<CounterDate> getDate() {
-		return date;
+		return datesList;
 	}
 
 	public void setDate(ArrayList<CounterDate> date) {
-		this.date = date;
+		this.datesList = date;
 	}
 
 }

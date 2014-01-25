@@ -29,8 +29,8 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.EditText;
 
 public class CountersActivity extends Activity {
-	ArrayList<String> counters;
-	ArrayAdapter<String> countersAdapter;
+	ArrayList<CounterModel> counters;
+	ArrayAdapter<CounterModel> countersAdapter;
 	ListView countersList;
 	
 	// store in and read from FILENAME
@@ -43,10 +43,10 @@ public class CountersActivity extends Activity {
 		
 		
 		countersList = (ListView) findViewById(R.id.countersList);
-		counters = new ArrayList<String>();
+		counters = new ArrayList<CounterModel>();
 		
 		readItems();
-		countersAdapter = new ArrayAdapter<String>(this, 
+		countersAdapter = new ArrayAdapter<CounterModel>(this, 
 				android.R.layout.simple_list_item_1, counters);
 		countersList.setAdapter(countersAdapter);
 		setupListViewListener();
@@ -70,10 +70,11 @@ public class CountersActivity extends Activity {
 	public void addTodoItem(View v){
 		EditText etNewItem = (EditText)
 			findViewById(R.id.etNewItem);
-		String temp = etNewItem.getText().toString();
-		int currentDayOfWeek = localCalendar.get(Calendar.YEAR);
-		temp = temp + currentDayOfWeek;
-		countersAdapter.add(temp.toString());
+		
+		CounterModel addName = new CounterModel(etNewItem.getText().toString());
+		//int currentDayOfWeek = localCalendar.get(Calendar.YEAR);
+		//temp = temp + currentDayOfWeek;
+		countersAdapter.add(addName);
 		etNewItem.setText("");
 		//saveItems(items.toString());
 	}
