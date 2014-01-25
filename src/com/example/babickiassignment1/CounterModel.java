@@ -1,22 +1,20 @@
 package com.example.babickiassignment1;
 
+import java.util.ArrayList;
+
 public class CounterModel {
 
 	// name of counter
 	private String name;
 	
 	// date info for counter
-	private CounterDate date;
-	
-	// count 
-	private int count;
+	private ArrayList<CounterDate> date;
 
 	// constructor
-	public CounterModel(String name, CounterDate date, int count) {
+	public CounterModel(String name, ArrayList<CounterDate> date) {
 		super();
 		this.name = name;
 		this.date = date;
-		this.count = count;
 	}
 
 	// getters and setters
@@ -28,23 +26,12 @@ public class CounterModel {
 		this.name = name;
 	}
 
-	public CounterDate getDate() {
+	public ArrayList<CounterDate> getDate() {
 		return date;
 	}
 
-	public void setDate(CounterDate date) {
+	public void setDate(ArrayList<CounterDate> date) {
 		this.date = date;
 	}
-
-	public int getCount() {
-		return count;
-	}
-
-	public void setCount(int count) {
-		this.count = count;
-	}
-
-	
-	
 
 }
