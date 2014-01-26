@@ -1,6 +1,7 @@
 package com.example.babickiassignment1;
 
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.widget.ListView;
 //import java.io.BufferedReader;
 
 
+
 //import java.io.FileInputStream;
 //import java.io.FileNotFoundException;
 //import java.io.FileOutputStream;
@@ -23,6 +25,7 @@ import java.util.Calendar;
 import java.util.TimeZone;
 
 
+
 //import android.content.Context;
 import android.view.View;
 //import android.widget.AdapterView;
@@ -30,12 +33,12 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.EditText;
 
 public class CountersActivity extends Activity {
-	public static ArrayList<CounterModel> counters;
+	ArrayList<CounterModel> counters;
 	ArrayAdapter<String> countersAdapter;
 	ListView countersListView;
 	
 	// store in and read from FILENAME
-	//private static final String FILENAME = "todo.txt";
+	private static final String FILENAME = "file.sav";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -99,7 +102,7 @@ public class CountersActivity extends Activity {
 	
 	Calendar localCalendar = Calendar.getInstance(TimeZone.getDefault());
 	
-	public void addTodoItem(View v){
+	public void addTodoItem(View v) throws ClassNotFoundException, IOException{
 		EditText etNewItem = (EditText)
 			findViewById(R.id.etNewItem);
 		
@@ -111,7 +114,21 @@ public class CountersActivity extends Activity {
 		
 		// remove text in the add 
 		etNewItem.setText("");
+		int last = counters.size() - 1;
+		//countersAdapter.add(""+last);
+		int sa = StoreData.saveInFile(this, counters);
+		//countersAdapter.add(""+sa);
+		ArrayList<CounterModel> test = StoreData.readFromFile(this);
+		//counters.add(test.get(0));
+		//int currentDayOfWeek = localCalendar.get(Calendar.YEAR);
+		//temp = temp + currentDayOfWeek;
+		if(test == null){
+			countersAdapter.add(":(");
+		}
+		else{
+		countersAdapter.add(test.get(last).getName().toString());
 		//saveItems(items.toString());
+		}
 	}
 
 	private void readItems() {

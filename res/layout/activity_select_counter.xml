@@ -12,7 +12,7 @@
         android:id="@+id/count_button"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:onClick="printNumber"
+        android:onClick="changeButtonText"
         android:text="@string/count_button_message" />
 
 </RelativeLayout>

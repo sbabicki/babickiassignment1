@@ -1,8 +1,14 @@
 package com.example.babickiassignment1;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class CounterModel {
+public class CounterModel implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	// name of counter
 	private String name;

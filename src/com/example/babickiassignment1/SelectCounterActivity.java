@@ -4,10 +4,11 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
+import android.view.View;
 import android.widget.Button;
 
 
-public class SelectCounterActivity extends CountersActivity {
+public class SelectCounterActivity extends Activity {
 	int position;
 	CounterModel counter;
 	
@@ -15,17 +16,17 @@ public class SelectCounterActivity extends CountersActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_select_counter);
-		
+		/*
 		Intent intent;
 		intent = getIntent();
 		position = intent.getIntExtra("position", -1);
 		if (position < 0 ) {
 			//SOMETHING WENT WRONG, DEAL WITH THIS
-			counter = counters.get(0);
+			//counter = counters.get(0);
 		}
 		else {
-			counter = counters.get(1);
-		}
+			//counter = counters.get(1);
+		}*/
 	}
 
 	@Override
@@ -35,9 +36,9 @@ public class SelectCounterActivity extends CountersActivity {
 		return true;
 	}
 	
-	public void printNumber(){
+	public void changeButtonText(View v){
 	Button p1_button = (Button)findViewById(R.id.count_button);
-		p1_button.setText(counter.getName());
+		p1_button.setText("sdkfslk");
 	}
 
 }
