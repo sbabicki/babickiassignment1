@@ -9,10 +9,10 @@
     tools:context=".SelectCounterActivity" >
 
 	<Button
-        android:id="@+id/button1"
+        android:id="@+id/count_button"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:onClick="printNumber"
-        android:text="@string/increase_count_button" />
+        android:text="@string/count_button_message" />
 
 </RelativeLayout>

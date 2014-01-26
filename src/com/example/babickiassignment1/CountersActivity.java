@@ -5,34 +5,37 @@ import java.util.ArrayList;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.view.Menu;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import java.io.BufferedReader;
+//import java.io.BufferedReader;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+
+//import java.io.FileInputStream;
+//import java.io.FileNotFoundException;
+//import java.io.FileOutputStream;
+//import java.io.IOException;
+//import java.io.InputStreamReader;
 import java.util.Calendar;
 import java.util.TimeZone;
 
-import android.content.Context;
+
+//import android.content.Context;
 import android.view.View;
-import android.widget.AdapterView;
+//import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.EditText;
 
 public class CountersActivity extends Activity {
-	ArrayList<CounterModel> counters;
+	public static ArrayList<CounterModel> counters;
 	ArrayAdapter<String> countersAdapter;
 	ListView countersListView;
 	
 	// store in and read from FILENAME
-	private static final String FILENAME = "todo.txt";
+	//private static final String FILENAME = "todo.txt";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -56,15 +59,26 @@ public class CountersActivity extends Activity {
 			@Override
 			public void onItemClick(android.widget.AdapterView<?> parent,
 					android.view.View view, int position, long rowId) {
-				counters.get(position).addCount();
+				
+				sendMessage(position);
+				
 				//counters.add();
 				//countersAdapter.add(""+ counters.get(position).getDate().size());;
-
-				countersAdapter.notifyDataSetChanged();
+				
+				
+				//counters.get(position).addCount();
+				//countersAdapter.notifyDataSetChanged();
 			
 				// TODO Auto-generated method stub	
 			}
 		});
+	}
+	
+	public void sendMessage(int position){
+		Intent intent = new Intent(this, SelectCounterActivity.class);
+		
+		intent.putExtra("position", position);
+		startActivity(intent);
 	}
 	
 	private void setupLongListViewListener() {
@@ -104,6 +118,16 @@ public class CountersActivity extends Activity {
 		// TODO Auto-generated method stub
 		
 	}
+/*	
+	public CounterModel getCounter (int position){
+		return counters.get(position);
+	}
+	//MIGHT DELETE LATER
+	public void setCounter(int position){
+		counters.get(position).addCount();
+	}
+*/
+	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
