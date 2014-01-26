@@ -17,8 +17,8 @@ public class CounterModel {
 		this.datesList = new ArrayList<CounterDate>();
 	}
 	
-	public void AddCount(){
-		
+	public void addCount(){
+		datesList.add(new CounterDate());
 	}
 
 	// getters and setters

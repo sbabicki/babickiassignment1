@@ -1,7 +1,11 @@
 package com.example.babickiassignment1;
 
+import java.util.Calendar;
+import java.util.TimeZone;
+
 public class CounterDate {
 
+	
 	// date information
 	private int hour;
 	private int day;
@@ -9,14 +13,17 @@ public class CounterDate {
 	private int month;
 	private int year;
 	
+	Calendar localCalendar = Calendar.getInstance(TimeZone.getDefault());
+	
 	// constructor
-	public CounterDate(int hour, int day, int week, int month, int year) {
+	public CounterDate( ) {
 		super();
-		this.hour = hour;
-		this.day = day;
-		this.week = week;
-		this.month = month;
-		this.year = year;
+		//int currentDayOfWeek = localCalendar.get(Calendar.YEAR);
+		this.hour = localCalendar.get(Calendar.HOUR);
+		this.day = localCalendar.get(Calendar.DAY_OF_MONTH);
+		this.week = localCalendar.get(Calendar.WEEK_OF_YEAR);
+		this.month = localCalendar.get(Calendar.MONTH);
+		this.year = localCalendar.get(Calendar.YEAR);
 	}
 
 	// getters and setters for the different times. setters not really needed
