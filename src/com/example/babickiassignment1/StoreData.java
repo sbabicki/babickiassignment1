@@ -25,8 +25,9 @@ public class StoreData {
 	public static int saveInFile(Context context, ArrayList <CounterModel> counters){
 		try{
 			
-			FileOutputStream fileOut = context.openFileOutput(FILENAME, Context.MODE_APPEND);
+			FileOutputStream fileOut = context.openFileOutput(FILENAME, Context.MODE_PRIVATE);
 			ObjectOutputStream out = new ObjectOutputStream(fileOut);
+			out.flush();
 			out.writeObject(counters);
 			out.close();
 			fileOut.close();
