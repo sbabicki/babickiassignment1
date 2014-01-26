@@ -3,8 +3,6 @@ package com.example.babickiassignment1;
 
 import java.util.ArrayList;
 
-
-
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
@@ -31,7 +29,7 @@ import android.widget.EditText;
 public class CountersActivity extends Activity {
 	ArrayList<CounterModel> counters;
 	ArrayAdapter<String> countersAdapter;
-	ListView countersList;
+	ListView countersListView;
 	
 	// store in and read from FILENAME
 	private static final String FILENAME = "todo.txt";
@@ -42,26 +40,26 @@ public class CountersActivity extends Activity {
 		setContentView(R.layout.activity_counters);
 		
 		
-		countersList = (ListView) findViewById(R.id.countersList);
+		countersListView = (ListView) findViewById(R.id.countersList);
 		counters = new ArrayList<CounterModel>();
 		
 		readItems();
 		countersAdapter = new ArrayAdapter<String>(this, 
 				android.R.layout.simple_list_item_1);
-		countersList.setAdapter(countersAdapter);
+		countersListView.setAdapter(countersAdapter);
 		setupListViewListener();
 		setupLongListViewListener();
 	}
 
 	private void setupListViewListener() {
-		countersList.setOnItemClickListener(new OnItemClickListener(){
+		countersListView.setOnItemClickListener(new OnItemClickListener(){
 			@Override
 			public void onItemClick(android.widget.AdapterView<?> parent,
 					android.view.View view, int position, long rowId) {
 				counters.get(position).addCount();
 				//counters.add();
 				//countersAdapter.add(""+ counters.get(position).getDate().size());;
-				
+
 				countersAdapter.notifyDataSetChanged();
 			
 				// TODO Auto-generated method stub	
@@ -70,7 +68,7 @@ public class CountersActivity extends Activity {
 	}
 	
 	private void setupLongListViewListener() {
-		countersList.setOnItemLongClickListener(new OnItemLongClickListener(){
+		countersListView.setOnItemLongClickListener(new OnItemLongClickListener(){
 			@Override
 			public boolean onItemLongClick(android.widget.AdapterView<?> parent,
 					android.view.View view, int position, long rowId) {

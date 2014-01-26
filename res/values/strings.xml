@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Counters</string>
+    <string name="app_name">Counter App</string>
+    <string name="counters_label">Counters</string>
+    <string name="select_counter_label">Specific Counter</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
     <string name="add_hint">Enter counter name</string>
