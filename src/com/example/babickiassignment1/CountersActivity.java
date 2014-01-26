@@ -60,7 +60,7 @@ public class CountersActivity extends Activity {
 					android.view.View view, int position, long rowId) {
 				counters.get(position).addCount();
 				//counters.add();
-				countersAdapter.add(counters.get(position).getDate().get(0).toString());;
+				//countersAdapter.add(""+ counters.get(position).getDate().size());;
 				
 				countersAdapter.notifyDataSetChanged();
 			

@@ -6,5 +6,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="add_hint">Enter counter name</string>
     <string name="add_counter_button">Add</string>
+    <string name="increase_count_button">Click to increment count</string>
 
 </resources>

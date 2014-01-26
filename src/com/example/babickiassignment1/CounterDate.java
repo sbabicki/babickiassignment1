@@ -18,7 +18,6 @@ public class CounterDate {
 	// constructor
 	public CounterDate( ) {
 		super();
-		//int currentDayOfWeek = localCalendar.get(Calendar.YEAR);
 		this.hour = localCalendar.get(Calendar.HOUR);
 		this.day = localCalendar.get(Calendar.DAY_OF_MONTH);
 		this.week = localCalendar.get(Calendar.WEEK_OF_YEAR);
