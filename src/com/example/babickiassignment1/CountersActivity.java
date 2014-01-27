@@ -126,7 +126,7 @@ public class CountersActivity extends Activity {
 			countersAdapter.add(":(");
 		}
 		else{
-		countersAdapter.add(test.get(last).getName().toString());
+		countersAdapter.add(test.get(last).getName().toString()+last);
 		//saveItems(items.toString());
 		}
 	}
