@@ -26,7 +26,17 @@ public class CountersActivity extends Activity {
 		setContentView(R.layout.activity_counters);
 		
 		// set up arraylist adapter for updating to screen dynamically
-		countersListView = (ListView) findViewById(R.id.countersList);
+				countersListView = (ListView) findViewById(R.id.countersList);
+				
+				
+		setupListViewListener();
+		setupLongListViewListener();
+		
+
+	}
+	protected void onStart(){
+		super.onStart();
+		
 		
 		// try to get old data
 		try {
@@ -52,9 +62,10 @@ public class CountersActivity extends Activity {
 			countersAdapter.add(counters.get(i).getName());
 		}
 		countersListView.setAdapter(countersAdapter);
-		setupListViewListener();
-		setupLongListViewListener();
+		
 	}
+	
+	
 
 	
 	// Go to activity for a specific counter

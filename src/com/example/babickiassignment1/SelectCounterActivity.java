@@ -51,7 +51,7 @@ public class SelectCounterActivity extends Activity {
 	}
 	
 	// Increase the count 
-	public void changeButtonText(View v){
+	public void changeButtonText(View v) throws ClassNotFoundException, IOException{
 		
 		// if the read or position worked properly add count
 		if (counter != null){
@@ -61,11 +61,19 @@ public class SelectCounterActivity extends Activity {
 			
 			// update the button text
 			Button p1_button = (Button)findViewById(R.id.count_button);
-			p1_button.setText("" + counter.getDate().size());
+			p1_button.setText("" + counter.getCount());
 			
 			// replace the old counter with the new one
+			//
+			//countersFromFile = new ArrayList<CounterModel>();
+			//countersFromFile.add(new CounterModel("test2"));
+			countersFromFile = StoreData.readFromFile(getApplicationContext());
 			countersFromFile.set(position, counter);
-			StoreData.saveInFile(getApplicationContext(), countersFromFile);
+			if( StoreData.saveInFile(getApplicationContext(), countersFromFile) == 0){
+				Button p1button = (Button)findViewById(R.id.count_button);
+				p1button.setText("io ERROR :(");
+			}
+			
 		}
 		else{
 			Button p1_button = (Button)findViewById(R.id.count_button);

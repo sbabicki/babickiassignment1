@@ -1,9 +1,10 @@
 package com.example.babickiassignment1;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.TimeZone;
 
-public class CounterDate {
+public class CounterDate implements Serializable{
 
 	
 	// date information

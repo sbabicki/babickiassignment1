@@ -5,11 +5,6 @@ import java.util.ArrayList;
 
 public class CounterModel implements Serializable{
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
 	// name of counter
 	private String name;
 	
@@ -25,6 +20,10 @@ public class CounterModel implements Serializable{
 	
 	public void addCount(){
 		datesList.add(new CounterDate());
+	}
+	
+	public int getCount(){
+		return datesList.size();
 	}
 
 	// getters and setters
