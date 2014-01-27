@@ -90,7 +90,8 @@ public class SelectCounterActivity extends Activity {
 	}
 	
 	public void renameCounter(){
-		Intent intent = new Intent(this, CountersActivity.class);
+		Intent intent = new Intent(this, RenameCounterActivity.class);
+		intent.putExtra("position", position);
 		startActivity(intent);
 	}
 	

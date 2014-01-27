@@ -29,7 +29,9 @@ public class CountersActivity extends Activity {
 		countersListView = (ListView) findViewById(R.id.countersList);
 					
 		setupListViewListener();
-		setupLongListViewListener();
+		
+		// UNUSED FEATURE: Delete items on long click 
+		//setupLongListViewListener();
 
 	}
 	
@@ -87,7 +89,7 @@ public class CountersActivity extends Activity {
 	}
 	
 	
-	// Delete items on long click
+	/* // UNUSED FEATURE: Delete items on long click
 	private void setupLongListViewListener() {
 		countersListView.setOnItemLongClickListener(new OnItemLongClickListener(){
 			@Override
@@ -104,7 +106,8 @@ public class CountersActivity extends Activity {
 				// TODO Auto-generated method stub	
 			}
 		});	
-	}
+	} 
+	*/
 	
 	
 	// Add new counter

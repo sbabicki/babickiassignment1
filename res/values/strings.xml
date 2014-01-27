@@ -12,6 +12,9 @@
     <string name="remove_counter">Delete</string>
     <string name="reset_counter">Reset</string>
     <string name="rename_counter">Rename</string>
+    <string name="rename_counter_button">Rename</string>
+    <string name="rename_counter_label">Rename</string>
+    <string name="rename_counter_hint">Type new name here</string>
     <string name="counter_stats">Statistics</string>
     <string name="total_stats">Total Statistics</string>
     <string name="title_activity_rename_counter">RenameCounterActivity</string>
