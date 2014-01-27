@@ -27,7 +27,7 @@
         android:layout_alignBottom="@+id/etNewItem"
         android:layout_alignTop="@+id/etNewItem"
         android:layout_toRightOf="@+id/etNewItem"
-        android:onClick="addTodoItem"
+        android:onClick="addNewCounter"
         android:text="@string/add_counter_button" />
 
     <ListView

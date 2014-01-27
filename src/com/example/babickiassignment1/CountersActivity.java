@@ -26,17 +26,15 @@ public class CountersActivity extends Activity {
 		setContentView(R.layout.activity_counters);
 		
 		// set up arraylist adapter for updating to screen dynamically
-				countersListView = (ListView) findViewById(R.id.countersList);
-				
-				
+		countersListView = (ListView) findViewById(R.id.countersList);
+					
 		setupListViewListener();
 		setupLongListViewListener();
-		
 
 	}
+	
 	protected void onStart(){
 		super.onStart();
-		
 		
 		// try to get old data
 		try {
@@ -65,8 +63,6 @@ public class CountersActivity extends Activity {
 		
 	}
 	
-	
-
 	
 	// Go to activity for a specific counter
 	private void setupListViewListener() {
@@ -112,11 +108,30 @@ public class CountersActivity extends Activity {
 	
 	
 	// Add new counter
-	public void addTodoItem(View v) throws ClassNotFoundException, IOException{
+	public void addNewCounter(View v) throws ClassNotFoundException, IOException{
 		
 		// create new counter with specified name
 		EditText etNewItem = (EditText) findViewById(R.id.etNewItem);
 		CounterModel addCounter = new CounterModel(etNewItem.getText().toString());
+		
+		// hacky error checking. REDO IF HAVE TIME
+		if(addCounter.getName().equals("")){
+			addCounter.setName("(blank)");
+		}
+		
+		String name = "";
+		int lastNum = 1;
+		for(int i = 0; i < counters.size(); i++){
+			if(counters.get(i).getName().startsWith(addCounter.getName())){
+				lastNum ++;
+			}
+		}
+		if(lastNum>1){
+			name = addCounter.getName() + lastNum;
+			addCounter.setName(name); 
+		}
+		
+		// add the new counter to the counters arraylist and adapter
 		counters.add(addCounter);
 		countersAdapter.add(addCounter.getName());
 		
@@ -125,16 +140,13 @@ public class CountersActivity extends Activity {
 		
 		// save the updated arraylist of counters to file system
 		StoreData.saveInFile(getApplicationContext(), counters);
-		
-		// Read file
-		// ArrayList<CounterModel> test = StoreData.readFromFile(this);
 	}
 
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
+		getMenuInflater().inflate(R.menu.counters, menu);
 		return true;
 	}
 

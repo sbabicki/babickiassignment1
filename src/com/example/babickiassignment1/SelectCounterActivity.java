@@ -65,23 +65,23 @@ public class SelectCounterActivity extends Activity {
 			
 			// replace the old counter with the new one
 			countersFromFile.set(position, counter);
-			if( StoreData.saveInFile(getApplicationContext(), countersFromFile) == 0){
+			if(StoreData.saveInFile(getApplicationContext(), countersFromFile) == 0){
 				addButtonMessage("ERROR SAVING FILE:(", false);
 			}
-			
 		}
 		else{
 			addButtonMessage("ERROR READING FILE:(", false);
 		}
 	}
 	
+	// Set the count button to display a message and possibly the count
 	public void addButtonMessage (String text, Boolean count){
-		Button p1_button = (Button)findViewById(R.id.count_button);
+		Button countButton = (Button)findViewById(R.id.count_button);
 		if(count == true){
-			p1_button.setText(text + "\n" + counter.getCount());
+			countButton.setText("Counter Name: " + counter.getName() + "\n\n" + text + "\n" + counter.getCount());
 		}
 		else{
-			p1_button.setText(text);
+			countButton.setText(text);
 		}
 	}
 }
