@@ -72,6 +72,12 @@ public class SelectCounterActivity extends Activity {
 	        case R.id.rename_counter:
 	            renameCounter();
 	            return true;
+	        case R.id.counter_stats:
+	            counterStats();
+	            return true;
+	        case R.id.total_stats:
+	            totalStats();
+	            return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
 	    }
@@ -100,6 +106,19 @@ public class SelectCounterActivity extends Activity {
 	public void renameCounter(){
 		Intent intent = new Intent(this, RenameCounterActivity.class);
 		intent.putExtra("position", position);
+		startActivity(intent);
+	}
+	
+	// start activity with position extra
+	public void counterStats(){
+		Intent intent = new Intent(this, StatisticsActivity.class);
+		intent.putExtra("position", position);
+		startActivity(intent);
+	}
+	
+	// start activity with no extras
+	public void totalStats(){
+		Intent intent = new Intent(this, StatisticsActivity.class);
 		startActivity(intent);
 	}
 	
