@@ -59,7 +59,7 @@ public class CountersActivity extends Activity {
 		
 		// populate the array adapter if there is stuff to print
 		for(int i = 0; i< counters.size(); i++){
-			countersAdapter.add(counters.get(i).getName());
+			countersAdapter.add(counters.get(i).getName()+": "+counters.get(i).getCount());
 		}
 		countersListView.setAdapter(countersAdapter);
 		
@@ -136,7 +136,7 @@ public class CountersActivity extends Activity {
 		
 		// add the new counter to the counters arraylist and adapter
 		counters.add(addCounter);
-		countersAdapter.add(addCounter.getName());
+		countersAdapter.add(addCounter.getName()+": "+addCounter.getCount());
 		
 		// remove text in the add bar
 		etNewItem.setText("");

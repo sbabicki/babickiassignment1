@@ -14,21 +14,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/btnAddItem"
         android:ems="10"
         android:hint="@string/add_hint" >
 
-        <requestFocus />
     </EditText>
-
-    <Button
-        android:id="@+id/btnAddItem"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/etNewItem"
-        android:layout_alignTop="@+id/etNewItem"
-        android:layout_toRightOf="@+id/etNewItem"
-        android:onClick="addNewCounter"
-        android:text="@string/add_counter_button" />
 
     <ListView
         android:id="@+id/countersList"
@@ -36,9 +26,17 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/etNewItem"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignRight="@+id/btnAddItem" >
+        android:layout_alignParentTop="true" >
 
-    </ListView>
+	</ListView>
+
+    <Button
+        android:id="@+id/btnAddItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/etNewItem"
+        android:onClick="addNewCounter"
+        android:text="@string/add_counter_button" />
 
 </RelativeLayout>

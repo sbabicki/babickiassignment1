@@ -9,6 +9,7 @@
     <string name="add_hint">Enter counter name</string>
     <string name="add_counter_button">Add</string>
     <string name="count_button_message">Tap the screen to increment the count</string>
+    <string name="home">Home</string>
     <string name="remove_counter">Delete</string>
     <string name="reset_counter">Reset</string>
     <string name="rename_counter">Rename</string>
@@ -18,5 +19,6 @@
     <string name="counter_stats">Statistics</string>
     <string name="total_stats">Total Statistics</string>
     <string name="title_activity_rename_counter">RenameCounterActivity</string>
+    <string name="title_activity_statistics">StatisticsActivity</string>
 
 </resources>

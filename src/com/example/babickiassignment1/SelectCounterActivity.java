@@ -60,6 +60,9 @@ public class SelectCounterActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    // Handle item selection
 	    switch (item.getItemId()) {
+	    	case R.id.home:
+	    		returnHome();
+	    		return true;
 	        case R.id.remove_counter:
 	            removeCounter();
 	            return true;
@@ -72,6 +75,11 @@ public class SelectCounterActivity extends Activity {
 	        default:
 	            return super.onOptionsItemSelected(item);
 	    }
+	}
+	
+	public void returnHome(){
+		Intent intent = new Intent(this, CountersActivity.class);
+		startActivity(intent); 
 	}
 	
 	public void removeCounter(){

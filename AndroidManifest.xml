@@ -30,6 +30,10 @@
             android:name="com.example.babickiassignment1.RenameCounterActivity"
             android:label="@string/title_activity_rename_counter" >
         </activity>
+        <activity
+            android:name="com.example.babickiassignment1.StatisticsActivity"
+            android:label="@string/title_activity_statistics" >
+        </activity>
     </application>
 
 </manifest>
