@@ -11,24 +11,7 @@ import android.view.Menu;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-
-//import java.io.BufferedReader;
-
-
-
-//import java.io.FileInputStream;
-//import java.io.FileNotFoundException;
-//import java.io.FileOutputStream;
-//import java.io.IOException;
-//import java.io.InputStreamReader;
-import java.util.Calendar;
-import java.util.TimeZone;
-
-
-
-//import android.content.Context;
 import android.view.View;
-//import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.EditText;
 
@@ -37,114 +20,105 @@ public class CountersActivity extends Activity {
 	ArrayAdapter<String> countersAdapter;
 	ListView countersListView;
 	
-	// store in and read from FILENAME
-	private static final String FILENAME = "file.sav";
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_counters);
 		
-		
+		// set up arraylist adapter for updating to screen dynamically
 		countersListView = (ListView) findViewById(R.id.countersList);
-		counters = new ArrayList<CounterModel>();
 		
-		readItems();
+		// try to get old data
+		try {
+			counters = StoreData.readFromFile(getApplicationContext());
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		// if old data not working or DNE then make a new counters arraylist
+		if(counters == null){
+			counters = new ArrayList<CounterModel>();
+		}
+		
 		countersAdapter = new ArrayAdapter<String>(this, 
 				android.R.layout.simple_list_item_1);
+		
+		// populate the array adapter if there is stuff to print
+		for(int i = 0; i< counters.size(); i++){
+			countersAdapter.add(counters.get(i).getName());
+		}
 		countersListView.setAdapter(countersAdapter);
 		setupListViewListener();
 		setupLongListViewListener();
 	}
 
+	
+	// Go to activity for a specific counter
 	private void setupListViewListener() {
 		countersListView.setOnItemClickListener(new OnItemClickListener(){
 			@Override
 			public void onItemClick(android.widget.AdapterView<?> parent,
 					android.view.View view, int position, long rowId) {
 				
-				sendMessage(position);
-				
-				//counters.add();
-				//countersAdapter.add(""+ counters.get(position).getDate().size());;
-				
-				
-				//counters.get(position).addCount();
-				//countersAdapter.notifyDataSetChanged();
-			
-				// TODO Auto-generated method stub	
+				// go to diff activity
+				switchActivity(position);
 			}
 		});
 	}
 	
-	public void sendMessage(int position){
+	// Go to the SelectCounter activity
+	public void switchActivity(int position){
 		Intent intent = new Intent(this, SelectCounterActivity.class);
 		
+		// pass over the index of interest for the counters arraylist
 		intent.putExtra("position", position);
 		startActivity(intent);
 	}
 	
+	
+	// Delete items on long click
 	private void setupLongListViewListener() {
 		countersListView.setOnItemLongClickListener(new OnItemLongClickListener(){
 			@Override
 			public boolean onItemLongClick(android.widget.AdapterView<?> parent,
 					android.view.View view, int position, long rowId) {
 				
+				// remove item from display and counters arraylist
 				countersAdapter.remove(counters.get(position).getName());;
 				counters.remove(position);
+				
+				StoreData.saveInFile(getApplicationContext(), counters);
 				countersAdapter.notifyDataSetChanged();
 				return true;
 				// TODO Auto-generated method stub	
 			}
-		});
-		
+		});	
 	}
 	
-	Calendar localCalendar = Calendar.getInstance(TimeZone.getDefault());
 	
+	// Add new counter
 	public void addTodoItem(View v) throws ClassNotFoundException, IOException{
-		EditText etNewItem = (EditText)
-			findViewById(R.id.etNewItem);
 		
-		CounterModel addName = new CounterModel(etNewItem.getText().toString());
-		counters.add(addName);
-		//int currentDayOfWeek = localCalendar.get(Calendar.YEAR);
-		//temp = temp + currentDayOfWeek;
-		countersAdapter.add(addName.getName());
+		// create new counter with specified name
+		EditText etNewItem = (EditText) findViewById(R.id.etNewItem);
+		CounterModel addCounter = new CounterModel(etNewItem.getText().toString());
+		counters.add(addCounter);
+		countersAdapter.add(addCounter.getName());
 		
-		// remove text in the add 
+		// remove text in the add bar
 		etNewItem.setText("");
-		int last = counters.size() - 1;
-		//countersAdapter.add(""+last);
-		int sa = StoreData.saveInFile(this, counters);
-		//countersAdapter.add(""+sa);
-		ArrayList<CounterModel> test = StoreData.readFromFile(this);
-		//counters.add(test.get(0));
-		//int currentDayOfWeek = localCalendar.get(Calendar.YEAR);
-		//temp = temp + currentDayOfWeek;
-		if(test == null){
-			countersAdapter.add(":(");
-		}
-		else{
-		countersAdapter.add(test.get(last).getName().toString()+last);
-		//saveItems(items.toString());
-		}
+		
+		// save the updated arraylist of counters to file system
+		StoreData.saveInFile(getApplicationContext(), counters);
+		
+		// Read file
+		// ArrayList<CounterModel> test = StoreData.readFromFile(this);
 	}
 
-	private void readItems() {
-		// TODO Auto-generated method stub
-		
-	}
-/*	
-	public CounterModel getCounter (int position){
-		return counters.get(position);
-	}
-	//MIGHT DELETE LATER
-	public void setCounter(int position){
-		counters.get(position).addCount();
-	}
-*/
-	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

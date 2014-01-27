@@ -21,30 +21,25 @@ public class SelectCounterActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_select_counter);
 		
+		// retrieve the position of the counter of interest
 		Intent intent;
 		intent = getIntent();
 		position = intent.getIntExtra("position", -1);
+		
+		// if the position is valid try to read from the file to get the counters arraylist
 		if (position >= 0 ) {
-			//countersFromFile = StoreData.readFromFile(this);
+			
+			// counter = counter of interest
 			try {
-				countersFromFile = StoreData.readFromFile(this);
+				countersFromFile = StoreData.readFromFile(getApplicationContext());
 				counter = countersFromFile.get(position);
-				
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
-				counter = new CounterModel("class");
+				e.printStackTrace();	
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				counter = new CounterModel("io");
 			}
-			
-			
-			
-		}
-		else {
-			//counter = counters.get(1);
 		}
 	}
 
@@ -55,16 +50,27 @@ public class SelectCounterActivity extends Activity {
 		return true;
 	}
 	
+	// Increase the count 
 	public void changeButtonText(View v){
-		//if (counter != null){
+		
+		// if the read or position worked properly add count
+		if (counter != null){
+			
+			// count ++
+			counter.addCount();
+			
+			// update the button text
 			Button p1_button = (Button)findViewById(R.id.count_button);
-			p1_button.setText(counter.getName());
-		/*}
+			p1_button.setText("" + counter.getDate().size());
+			
+			// replace the old counter with the new one
+			countersFromFile.set(position, counter);
+			StoreData.saveInFile(getApplicationContext(), countersFromFile);
+		}
 		else{
 			Button p1_button = (Button)findViewById(R.id.count_button);
-			p1_button.setText(":(");
-		}*/
-	
+			p1_button.setText("ERROR :(");
+		}
 	}
 
 }
