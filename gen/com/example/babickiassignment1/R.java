@@ -24,26 +24,29 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int action_settings=0x7f080004;
+        public static final int action_settings=0x7f080005;
         public static final int btnAddItem=0x7f080001;
         public static final int count_button=0x7f080003;
-        public static final int counter_stats=0x7f080008;
+        public static final int counter_name=0x7f080004;
+        public static final int counter_stats=0x7f080009;
         public static final int countersList=0x7f080002;
         public static final int etNewItem=0x7f080000;
-        public static final int remove_counter=0x7f080005;
-        public static final int rename_counter=0x7f080007;
-        public static final int reset_counter=0x7f080006;
-        public static final int total_stats=0x7f080009;
+        public static final int remove_counter=0x7f080006;
+        public static final int rename_counter=0x7f080008;
+        public static final int reset_counter=0x7f080007;
+        public static final int total_stats=0x7f08000a;
     }
     public static final class layout {
         public static final int activity_counters=0x7f030000;
         public static final int activity_main=0x7f030001;
-        public static final int activity_select_counter=0x7f030002;
+        public static final int activity_rename_counter=0x7f030002;
+        public static final int activity_select_counter=0x7f030003;
     }
     public static final class menu {
         public static final int counters=0x7f070000;
         public static final int main=0x7f070001;
-        public static final int select_counter=0x7f070002;
+        public static final int rename_counter=0x7f070002;
+        public static final int select_counter=0x7f070003;
     }
     public static final class string {
         public static final int action_settings=0x7f050003;
@@ -58,6 +61,7 @@ public final class R {
         public static final int rename_counter=0x7f05000a;
         public static final int reset_counter=0x7f050009;
         public static final int select_counter_label=0x7f050002;
+        public static final int title_activity_rename_counter=0x7f05000d;
         public static final int total_stats=0x7f05000c;
     }
     public static final class style {

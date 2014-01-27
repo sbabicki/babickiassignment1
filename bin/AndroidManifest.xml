@@ -26,6 +26,10 @@
             android:name="com.example.babickiassignment1.SelectCounterActivity"
             android:label="@string/select_counter_label" >
         </activity>
+        <activity
+            android:name="com.example.babickiassignment1.RenameCounterActivity"
+            android:label="@string/title_activity_rename_counter" >
+        </activity>
     </application>
 
 </manifest>

@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 
 public class SelectCounterActivity extends Activity {
@@ -33,6 +35,10 @@ public class SelectCounterActivity extends Activity {
 			try {
 				countersFromFile = StoreData.readFromFile(getApplicationContext());
 				counter = countersFromFile.get(position);
+
+				TextView counterName = (TextView)findViewById(R.id.counter_name);
+				counterName.setText(counter.getName());
+				
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();	
@@ -51,6 +57,43 @@ public class SelectCounterActivity extends Activity {
 		return true;
 	}
 	
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    // Handle item selection
+	    switch (item.getItemId()) {
+	        case R.id.remove_counter:
+	            removeCounter();
+	            return true;
+	        case R.id.reset_counter:
+	            resetCounter();
+	            return true;
+	        case R.id.rename_counter:
+	            renameCounter();
+	            return true;
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
+	}
+	
+	public void removeCounter(){
+		countersFromFile.remove(position);
+		if(StoreData.saveInFile(getApplicationContext(), countersFromFile) == 0){
+			addButtonMessage("ERROR SAVING FILE:(", false);
+		}
+		Intent intent = new Intent(this, CountersActivity.class);
+		startActivity(intent); 
+	}
+	
+	public void resetCounter(){
+		counter.getDate().clear();
+		addButtonMessage(counter.getName() + " HAS BEEN RESET \n Tap the screen to increment the count", true);
+		replaceAndSave();
+	}
+	
+	public void renameCounter(){
+		Intent intent = new Intent(this, CountersActivity.class);
+		startActivity(intent);
+	}
+	
 	// Increase the count 
 	public void changeButtonText(View v) throws ClassNotFoundException, IOException{
 		
@@ -62,15 +105,21 @@ public class SelectCounterActivity extends Activity {
 			
 			// update the button text
 			addButtonMessage("Tap the screen to increment the count", true);
+			replaceAndSave();
 			
-			// replace the old counter with the new one
-			countersFromFile.set(position, counter);
-			if(StoreData.saveInFile(getApplicationContext(), countersFromFile) == 0){
-				addButtonMessage("ERROR SAVING FILE:(", false);
-			}
 		}
 		else{
 			addButtonMessage("ERROR READING FILE:(", false);
+		}
+	}
+	
+	// replaces the old instance of the counter with the new one and saves to file
+	public void replaceAndSave (){
+		
+		// replace the old counter with the new one
+		countersFromFile.set(position, counter);
+		if(StoreData.saveInFile(getApplicationContext(), countersFromFile) == 0){
+			addButtonMessage("ERROR SAVING FILE:(", false);
 		}
 	}
 	
@@ -78,7 +127,7 @@ public class SelectCounterActivity extends Activity {
 	public void addButtonMessage (String text, Boolean count){
 		Button countButton = (Button)findViewById(R.id.count_button);
 		if(count == true){
-			countButton.setText("Counter Name: " + counter.getName() + "\n\n" + text + "\n" + counter.getCount());
+			countButton.setText(text + "\n" + counter.getCount());
 		}
 		else{
 			countButton.setText(text);

@@ -14,5 +14,6 @@
     <string name="rename_counter">Rename</string>
     <string name="counter_stats">Statistics</string>
     <string name="total_stats">Total Statistics</string>
+    <string name="title_activity_rename_counter">RenameCounterActivity</string>
 
 </resources>
