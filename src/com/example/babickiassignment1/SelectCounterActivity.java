@@ -40,6 +40,7 @@ public class SelectCounterActivity extends Activity {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			addButtonMessage("Tap the screen to increment the count", true);
 		}
 	}
 
@@ -60,25 +61,27 @@ public class SelectCounterActivity extends Activity {
 			counter.addCount();
 			
 			// update the button text
-			Button p1_button = (Button)findViewById(R.id.count_button);
-			p1_button.setText("" + counter.getCount());
+			addButtonMessage("Tap the screen to increment the count", true);
 			
 			// replace the old counter with the new one
-			//
-			//countersFromFile = new ArrayList<CounterModel>();
-			//countersFromFile.add(new CounterModel("test2"));
-			countersFromFile = StoreData.readFromFile(getApplicationContext());
 			countersFromFile.set(position, counter);
 			if( StoreData.saveInFile(getApplicationContext(), countersFromFile) == 0){
-				Button p1button = (Button)findViewById(R.id.count_button);
-				p1button.setText("io ERROR :(");
+				addButtonMessage("ERROR SAVING FILE:(", false);
 			}
 			
 		}
 		else{
-			Button p1_button = (Button)findViewById(R.id.count_button);
-			p1_button.setText("ERROR :(");
+			addButtonMessage("ERROR READING FILE:(", false);
 		}
 	}
-
+	
+	public void addButtonMessage (String text, Boolean count){
+		Button p1_button = (Button)findViewById(R.id.count_button);
+		if(count == true){
+			p1_button.setText(text + "\n" + counter.getCount());
+		}
+		else{
+			p1_button.setText(text);
+		}
+	}
 }

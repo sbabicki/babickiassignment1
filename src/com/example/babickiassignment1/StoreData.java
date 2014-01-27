@@ -22,28 +22,24 @@ public class StoreData {
 	
 	// saves an arraylist in file
 	public static int saveInFile(Context context, ArrayList <CounterModel> counters){
-		int ret = 1;
 		try{
 			FileOutputStream fileOut = context.openFileOutput(FILENAME, Context.MODE_PRIVATE);
 			ObjectOutputStream out = new ObjectOutputStream(fileOut);
 			out.flush();
-			
 			out.writeObject(counters);
-			//ret = 0;
 			out.close();
 			fileOut.close();
-			
-			return ret;
+			return 1;
 			
 		} catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-            return 2;
+           
 		} catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-            return 0;
 		}
+		return 0;
 	}
 	
 	// returns the arraylist from file
