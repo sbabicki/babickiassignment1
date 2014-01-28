@@ -176,11 +176,37 @@ public class StatisticsActivity extends Activity {
 	
 	// DO TOMORROW
 	private void totalStatistics() {
-	/*	// ERROR CHECK: SIZE 0, DO LATER
+		
+		// create a new array with all dates in order and send to counter statistics
+		
+		// ERROR CHECK: SIZE 0, DO LATER
 		ArrayList<CounterDate> totalList;
+		ArrayList<CounterDate> newList;
+		int x = 0;
 		totalList = countersFromFile.get(0).getDate();
-		for(int i = 0; i< countersFromFile.size() -1; i++){
-			if(totalList.get(i).
+		
+		// compare with each list
+		for(int i = 1; i< countersFromFile.size(); i++){
+			newList = countersFromFile.get(i).getDate();
+			
+			//compare with each element in old list
+			for(int j = 0; j < newList.size()-1; j++){
+				if(totalList.get(x).getDay() > newList.get(j).getDay()){
+					totalList.add(x, newList.get(j));
+				}
+				else{
+					if(x+1 >= totalList.size()){
+						for(int s = j; s<newList.size(); s++){
+							totalList.add(newList.get(s));
+						}
+						return;
+					}
+					else{
+						x++;
+					}
+				}
+			}
+			
 		}
 		
 		if(counter.getCount() == 1){
@@ -197,7 +223,7 @@ public class StatisticsActivity extends Activity {
 				hourCount = 1;
 			}
 		}
-		//update */
+		//update 
 	
 	}
 

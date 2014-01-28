@@ -19,7 +19,7 @@ public class CounterDate implements Serializable{
 	// constructor
 	public CounterDate( ) {
 		super();
-		this.hour = localCalendar.get(Calendar.HOUR);
+		this.hour = localCalendar.get(Calendar.HOUR_OF_DAY);
 		this.day = localCalendar.get(Calendar.DAY_OF_MONTH);
 		this.week = localCalendar.get(Calendar.WEEK_OF_YEAR);
 		this.month = localCalendar.get(Calendar.MONTH);
