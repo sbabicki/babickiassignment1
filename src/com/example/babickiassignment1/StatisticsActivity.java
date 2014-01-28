@@ -174,11 +174,31 @@ public class StatisticsActivity extends Activity {
 		datesAdapter.add(dateInfo + " -- " + count + "\n");
 	}
 	
-
+	// DO TOMORROW
 	private void totalStatistics() {
-		ArrayList<CounterModel> test;
+	/*	// ERROR CHECK: SIZE 0, DO LATER
+		ArrayList<CounterDate> totalList;
+		totalList = countersFromFile.get(0).getDate();
+		for(int i = 0; i< countersFromFile.size() -1; i++){
+			if(totalList.get(i).
+		}
 		
-		
+		if(counter.getCount() == 1){
+			//update
+			return;
+		}
+		int hourCount = 1;
+		for(int i = 0; i< counter.getCount()-1; i++){
+			if(counter.getDate().get(i).getHour() == counter.getDate().get(i+1).getHour()){
+				hourCount ++;
+			}
+			else{
+				//update
+				hourCount = 1;
+			}
+		}
+		//update */
+	
 	}
 
 	@Override
