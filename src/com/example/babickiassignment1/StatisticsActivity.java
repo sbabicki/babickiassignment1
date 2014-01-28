@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ExpandableListAdapter;
 import android.widget.ListView;
@@ -173,12 +174,10 @@ public class StatisticsActivity extends Activity {
 		datesAdapter.add(dateInfo + " -- " + count + "\n");
 	}
 	
-	
-	
-
 
 	private void totalStatistics() {
-		// TODO Auto-generated method stub
+		ArrayList<CounterModel> test;
+		
 		
 	}
 
@@ -187,6 +186,23 @@ public class StatisticsActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.statistics, menu);
 		return true;
+	}
+	
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    // Handle item selection
+	    switch (item.getItemId()) {
+	    	case R.id.home_from_stats:
+	    		returnHome();
+	    		return true;
+
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
+	}
+	
+	public void returnHome(){
+		Intent intent = new Intent(this, CountersActivity.class);
+		startActivity(intent); 
 	}
 
 }

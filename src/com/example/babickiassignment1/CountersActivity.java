@@ -27,12 +27,9 @@ public class CountersActivity extends Activity {
 		
 		// set up arraylist adapter for updating to screen dynamically
 		countersListView = (ListView) findViewById(R.id.countersList);
-					
-		setupListViewListener();
 		
-		// UNUSED FEATURE: Delete items on long click 
-		//setupLongListViewListener();
-
+		// respond to clicks on listview elements
+		setupListViewListener();
 	}
 	
 	protected void onStart(){
@@ -89,27 +86,6 @@ public class CountersActivity extends Activity {
 	}
 	
 	
-	/* // UNUSED FEATURE: Delete items on long click
-	private void setupLongListViewListener() {
-		countersListView.setOnItemLongClickListener(new OnItemLongClickListener(){
-			@Override
-			public boolean onItemLongClick(android.widget.AdapterView<?> parent,
-					android.view.View view, int position, long rowId) {
-				
-				// remove item from display and counters arraylist
-				countersAdapter.remove(counters.get(position).getName());;
-				counters.remove(position);
-				
-				StoreData.saveInFile(getApplicationContext(), counters);
-				countersAdapter.notifyDataSetChanged();
-				return true;
-				// TODO Auto-generated method stub	
-			}
-		});	
-	} 
-	*/
-	
-	
 	// Add new counter
 	public void addNewCounter(View v) throws ClassNotFoundException, IOException{
 		
@@ -121,20 +97,6 @@ public class CountersActivity extends Activity {
 		if(addCounter.getName().equals("")){
 			addCounter.setName("(blank)");
 		}
-		
-		/*// UNUSED FEATURE: Change name if name already exists
-		String name = "";
-		int lastNum = 1;
-		for(int i = 0; i < counters.size(); i++){
-			if(counters.get(i).getName().startsWith(addCounter.getName())){
-				lastNum ++;
-			}
-		}
-		if(lastNum>1){
-			name = addCounter.getName() + lastNum;
-			addCounter.setName(name); 
-		}
-		*/
 		
 		// add the new counter to the counters arraylist and adapter
 		counters.add(addCounter);

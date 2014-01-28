@@ -25,6 +25,8 @@ public class CounterDate implements Serializable{
 		this.month = localCalendar.get(Calendar.MONTH);
 		this.year = localCalendar.get(Calendar.YEAR);
 	}
+	
+	// converts 24 hour to 12 hour am/pm time
 	public static String convertHours (int hour){
 		if(hour>12){
 			return hour-12+":00 PM";
