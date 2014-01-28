@@ -25,6 +25,53 @@ public class CounterDate implements Serializable{
 		this.month = localCalendar.get(Calendar.MONTH);
 		this.year = localCalendar.get(Calendar.YEAR);
 	}
+	public static String convertHours (int hour){
+		if(hour>12){
+			return hour-12+":00 PM";
+		}
+		else if(hour == 0){
+			return "12:00 AM";
+		}
+		else {
+			return hour+":00 AM";
+		}
+	}
+	
+	// returns a string representing month
+	public static String getMonthString(int intMonth){
+		String stringMonth;
+		
+		switch (intMonth) {
+			case 0: stringMonth = "January";
+			break;
+			case 1: stringMonth = "February";
+			break;
+			case 2: stringMonth = "March";
+			break;
+			case 3: stringMonth = "April";
+			break;
+			case 4: stringMonth = "May";
+			break;
+			case 5: stringMonth = "June";
+			break;
+			case 6: stringMonth = "July";
+			break;
+			case 7: stringMonth = "August";
+			break;
+			case 8: stringMonth = "September";
+			break;
+			case 9: stringMonth = "October";
+			break;
+			case 10: stringMonth = "November";
+			break;
+			case 11: stringMonth = "December";
+			break;
+			default: stringMonth = "Invalid Month";
+			break;
+			}
+		
+			return stringMonth;
+	}
 
 	// getters and setters for the different times. setters not really needed
 	public int getHour() {

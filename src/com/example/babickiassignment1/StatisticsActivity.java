@@ -53,16 +53,31 @@ public class StatisticsActivity extends Activity {
 			return;
 		}
 		
-		datesAdapter.add("By Hour: \n");
+		
 		if(counter.getCount()>0){
-			getSummary(counter);
+			datesAdapter.add("By Hour: \n");
+			getHourSummary(counter);
+			datesAdapter.add("\n");
+			datesAdapter.add("By Day: \n");
+			getDaySummary(counter);
+			datesAdapter.add("\n");
+			datesAdapter.add("By Week: \n");
+			getWeekSummary(counter);
+			datesAdapter.add("\n");
+			datesAdapter.add("By Month: \n");
+			getMonthSummary(counter);
 		}
 	}
 	
-	private void getSummary(CounterModel counter){
+	// there's got to be a better way of doing this...
+	private void getHourSummary(CounterModel counter){
 		
 		if(counter.getCount() == 1){
-			datesAdapter.add(""+ counter.getDate().get(counter.getCount()-1).getHour() +":00 -- "+ 1 +"\n");
+			printSummary(CounterDate.getMonthString(counter.getDate().get(0).getMonth())
+					//+" "+counter.getDate().get(0).getWeek()
+					+" "+counter.getDate().get(0).getDay()
+					+" "+ CounterDate.convertHours(counter.getDate().get(0).getHour()), 
+					1);
 			return;
 		}
 		int hourCount = 1;
@@ -71,12 +86,95 @@ public class StatisticsActivity extends Activity {
 				hourCount ++;
 			}
 			else{
-				datesAdapter.add(""+ counter.getDate().get(i).getHour() +":00 -- "+ hourCount+"\n");
+				printSummary(CounterDate.getMonthString(counter.getDate().get(i).getMonth())
+						//+" "+counter.getDate().get(i).getWeek()
+						+" "+counter.getDate().get(i).getDay()
+						+" "+ CounterDate.convertHours(counter.getDate().get(i).getHour()), 
+						hourCount);
 				hourCount = 1;
 			}
 		}
-		datesAdapter.add(""+ counter.getDate().get(counter.getCount()-1).getHour() +":00 -- "+ hourCount+"\n");
+		printSummary(CounterDate.getMonthString(counter.getDate().get(counter.getCount()-1).getMonth())
+				//+" "+counter.getDate().get(counter.getCount()-1).getWeek()+counter.getDate().get(counter.getCount()-1).getWeek()
+				+" "+counter.getDate().get(counter.getCount()-1).getDay()
+				+" "+ CounterDate.convertHours(counter.getDate().get(counter.getCount()-1).getHour()),
+				hourCount);
 	}
+	private void getDaySummary(CounterModel counter){
+		
+		if(counter.getCount() == 1){
+			printSummary(CounterDate.getMonthString(counter.getDate().get(0).getMonth())
+					//+" "+counter.getDate().get(0).getWeek()
+					+" "+counter.getDate().get(0).getDay(),
+					1);
+			return;
+		}
+		int dayCount = 1;
+		for(int i = 0; i< counter.getCount()-1; i++){
+			if(counter.getDate().get(i).getDay() == counter.getDate().get(i+1).getDay()){
+				dayCount ++;
+			}
+			else{
+				printSummary(CounterDate.getMonthString(counter.getDate().get(i).getMonth())
+						//+" "+counter.getDate().get(i).getWeek()
+						+" "+counter.getDate().get(i).getDay(), 
+						dayCount);
+				dayCount = 1;
+			}
+		}
+		printSummary(CounterDate.getMonthString(counter.getDate().get(counter.getCount()-1).getMonth())
+				//+" "+counter.getDate().get(counter.getCount()-1).getWeek()+counter.getDate().get(counter.getCount()-1).getWeek()
+				+" "+counter.getDate().get(counter.getCount()-1).getDay(),
+				dayCount);
+	}
+	private void getWeekSummary(CounterModel counter){
+		
+		if(counter.getCount() == 1){
+			printSummary(//CounterDate.getMonthString(counter.getDate().get(0).getMonth())
+					"Week "+counter.getDate().get(0).getWeek(),
+					1);
+			return;
+		}
+		int weekCount = 1;
+		for(int i = 0; i< counter.getCount()-1; i++){
+			if(counter.getDate().get(i).getWeek() == counter.getDate().get(i+1).getWeek()){
+				weekCount ++;
+			}
+			else{
+				printSummary(//CounterDate.getMonthString(counter.getDate().get(i).getMonth())
+						"Week "+counter.getDate().get(i).getWeek(), weekCount);
+				weekCount = 1;
+			}
+		}
+		printSummary(//CounterDate.getMonthString(counter.getDate().get(counter.getCount()-1).getMonth())
+				"Week "+counter.getDate().get(counter.getCount()-1).getWeek()+counter.getDate().get(counter.getCount()-1).getWeek(), 
+				weekCount);
+	}
+	private void getMonthSummary(CounterModel counter){
+		
+		if(counter.getCount() == 1){
+			printSummary(CounterDate.getMonthString(counter.getDate().get(0).getMonth()), 1);
+			return;
+		}
+		int monthCount = 1;
+		for(int i = 0; i< counter.getCount()-1; i++){
+			if(counter.getDate().get(i).getMonth() == counter.getDate().get(i+1).getMonth()){
+				monthCount ++;
+			}
+			else{
+				printSummary(CounterDate.getMonthString(counter.getDate().get(i).getMonth()), monthCount);
+				monthCount = 1;
+			}
+		}
+		printSummary(CounterDate.getMonthString(counter.getDate().get(counter.getCount()-1).getMonth()), monthCount);
+	}
+	
+	private void printSummary (String dateInfo, int count){
+		datesAdapter.add(dateInfo + " -- " + count + "\n");
+	}
+	
+	
+	
 
 
 	private void totalStatistics() {

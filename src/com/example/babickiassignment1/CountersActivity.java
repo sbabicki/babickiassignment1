@@ -121,6 +121,7 @@ public class CountersActivity extends Activity {
 		if(addCounter.getName().equals("")){
 			addCounter.setName("(blank)");
 		}
+		
 		/*// UNUSED FEATURE: Change name if name already exists
 		String name = "";
 		int lastNum = 1;
