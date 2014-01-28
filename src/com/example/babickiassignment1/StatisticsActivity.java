@@ -1,6 +1,7 @@
 package com.example.babickiassignment1;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -11,10 +12,12 @@ import android.widget.ExpandableListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class StatisticsActivity extends SelectCounterActivity {
+public class StatisticsActivity extends Activity {
 	int position;
 	ListView list;
 	ArrayAdapter<String> datesAdapter;
+	ArrayList <CounterModel> countersFromFile;
+	CounterModel counter = null;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -49,27 +52,30 @@ public class StatisticsActivity extends SelectCounterActivity {
 			e.printStackTrace();
 			return;
 		}
+		
+		datesAdapter.add("By Hour: \n");
 		if(counter.getCount()>0){
-			
-			int hourCount = 1;
-			
-			datesAdapter.add("By Hour: \n");
-			for(int i = 0; i< counter.getCount()-1; i++){
-				if(counter.getDate().get(i).getHour() == counter.getDate().get(i+1).getHour()){
-					hourCount ++;
-				}
-				else{
-					datesAdapter.add(""+ counter.getDate().get(i).getHour() +": "+ hourCount+"\n");
-					hourCount = 1;
-				}
-			}
-			datesAdapter.add(""+ counter.getDate().get(counter.getCount()-1).getHour() +": "+ hourCount+"\n");
-			
-			
-			
+			getSummary(counter);
 		}
+	}
+	
+	private void getSummary(CounterModel counter){
 		
-		
+		if(counter.getCount() == 1){
+			datesAdapter.add(""+ counter.getDate().get(counter.getCount()-1).getHour() +":00 -- "+ 1 +"\n");
+			return;
+		}
+		int hourCount = 1;
+		for(int i = 0; i< counter.getCount()-1; i++){
+			if(counter.getDate().get(i).getHour() == counter.getDate().get(i+1).getHour()){
+				hourCount ++;
+			}
+			else{
+				datesAdapter.add(""+ counter.getDate().get(i).getHour() +":00 -- "+ hourCount+"\n");
+				hourCount = 1;
+			}
+		}
+		datesAdapter.add(""+ counter.getDate().get(counter.getCount()-1).getHour() +":00 -- "+ hourCount+"\n");
 	}
 
 
