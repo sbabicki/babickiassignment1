@@ -131,6 +131,16 @@ public class SelectCounterActivity extends Activity {
 			// count ++
 			counter.addCount();
 			
+			// sort
+			for(int i = 0; i < position; i ++){
+				if(counter.getCount() <= countersFromFile.get(i).getCount()){
+					// we are in the right position
+				}
+				else{
+					swap(countersFromFile.get(i), i);
+				}
+			}
+			
 			// update the button text
 			addButtonMessage("Tap the screen to increment the count", true);
 			replaceAndSave();
@@ -139,6 +149,13 @@ public class SelectCounterActivity extends Activity {
 		else{
 			addButtonMessage("ERROR READING FILE:(", false);
 		}
+	}
+	
+	// swaps positions - for sorting
+	public void swap(CounterModel oldCounter, int newPosition){
+		countersFromFile.set(position, oldCounter);
+		countersFromFile.set(newPosition, counter);
+		position = newPosition;
 	}
 	
 	// replaces the old instance of the counter with the new one and saves to file

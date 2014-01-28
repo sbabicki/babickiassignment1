@@ -3,6 +3,9 @@ package com.example.babickiassignment1;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -59,7 +62,6 @@ public class CountersActivity extends Activity {
 			countersAdapter.add(counters.get(i).getName()+": "+counters.get(i).getCount());
 		}
 		countersListView.setAdapter(countersAdapter);
-		
 	}
 	
 	
@@ -101,6 +103,14 @@ public class CountersActivity extends Activity {
 		// add the new counter to the counters arraylist and adapter
 		counters.add(addCounter);
 		countersAdapter.add(addCounter.getName()+": "+addCounter.getCount());
+		//countersAdapter.sort(Comparator);
+		
+		/*// order alphabetically
+		countersAdapter.sort(new Comparator<String>() 
+				{ public int compare(String object1, String object2) {
+                 return  object1.compareTo(object2);}});
+	
+		countersAdapter.notifyDataSetChanged();// */
 		
 		// remove text in the add bar
 		etNewItem.setText("");
