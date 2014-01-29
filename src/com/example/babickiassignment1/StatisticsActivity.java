@@ -108,6 +108,7 @@ public class StatisticsActivity extends Activity {
 			datesAdapter.add("By Week: \nNo Counts \n");
 			datesAdapter.add("By Month: \nNo Counts \n");
 		}
+		datesAdapter.notifyDataSetChanged(); 
 	}
 	
 	// print to stats to screen
@@ -241,7 +242,7 @@ public class StatisticsActivity extends Activity {
 			}
 		}
 		printSummary(//CounterDate.getMonthString(counter.getDate().get(counter.getCount()-1).getMonth())
-				"Week "+counter.getDates().get(counter.getCount()-1).getWeek()+counter.getDates().get(counter.getCount()-1).getWeek(), 
+				"Week "+counter.getDates().get(counter.getCount()-1).getWeek(), 
 				weekCount);
 	}
 	private void getMonthSummary(CounterModel counter){

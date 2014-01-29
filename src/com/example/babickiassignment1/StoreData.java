@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 
 public class StoreData {
-	private static final String FILENAME = "mike.sav";
+	private static final String FILENAME = "mike2.sav";
 
 	public StoreData() {
 		// TODO Auto-generated constructor stub
