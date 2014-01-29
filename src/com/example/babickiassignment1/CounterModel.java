@@ -35,7 +35,7 @@ public class CounterModel implements Serializable{
 		this.name = name;
 	}
 
-	public ArrayList<CounterDate> getDate() {
+	public ArrayList<CounterDate> getDates() {
 		return datesList;
 	}
 

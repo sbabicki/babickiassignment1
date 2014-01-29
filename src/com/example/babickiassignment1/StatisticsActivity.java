@@ -44,15 +44,25 @@ public class StatisticsActivity extends Activity {
 	private void totalStatistics() {
 		setup();
          
-        ArrayList<CounterDate> totalList = countersFromFile.get(0).getDate();
-        ArrayList<CounterDate> newList;
+		// start totalList with first list
+        ArrayList<CounterDate> totalList = countersFromFile.get(0).getDates();
 
-        // compare with each list
-        // first 2, add rest later
-         newList = countersFromFile.get(1).getDate();
-         totalList = compare(totalList, newList);
-         counter = new CounterModel("total");
-         counter.setDate(totalList);
+        // if more than one element combine into one big arraylist
+        if(countersFromFile.size() > 0){
+        	
+        	 // compare with each list starting with 2nd 
+            for (int i = 1; i < countersFromFile.size(); i++){
+            	totalList = compare(totalList, countersFromFile.get(i).getDates());
+            }
+
+            counter = new CounterModel("total");
+            counter.setDate(totalList);
+        }
+        
+        // if only one element total = normal counter stats
+        else{
+        	counter = countersFromFile.get(0);
+        }
          
  		getSummary();
 	}
@@ -110,6 +120,11 @@ public class StatisticsActivity extends Activity {
 	private static ArrayList<CounterDate> compare(ArrayList<CounterDate> totalList, ArrayList<CounterDate> newList){  
 		int x = 0;
 		
+		// if nothing to add from other list return
+		if(newList.size() == 0){
+			return totalList;
+		}
+		
 		// for each element in the secondList
 		for(int j = 0; j < newList.size(); j++){
 			
@@ -127,7 +142,7 @@ public class StatisticsActivity extends Activity {
 				if(x+1 >= totalList.size()){
 					
 					// add the rest of the second list to the first list
-					for(int s = j; s<newList.size(); s++){
+					for(int s = j; s < newList.size(); s++){
 						totalList.add(newList.get(s));
 					}
 					// we are done
@@ -152,100 +167,100 @@ public class StatisticsActivity extends Activity {
 	private void getHourSummary(CounterModel counter){
 		
 		if(counter.getCount() == 1){
-			printSummary(CounterDate.getMonthString(counter.getDate().get(0).getMonth())
+			printSummary(CounterDate.getMonthString(counter.getDates().get(0).getMonth())
 					//+" "+counter.getDate().get(0).getWeek()
-					+" "+counter.getDate().get(0).getDay()
-					+" "+ CounterDate.convertHours(counter.getDate().get(0).getHour()), 
+					+" "+counter.getDates().get(0).getDay()
+					+" "+ CounterDate.convertHours(counter.getDates().get(0).getHour()), 
 					1);
 			return;
 		}
 		int hourCount = 1;
 		for(int i = 0; i< counter.getCount()-1; i++){
-			if(counter.getDate().get(i).getHour() == counter.getDate().get(i+1).getHour()){
+			if(counter.getDates().get(i).getHour() == counter.getDates().get(i+1).getHour()){
 				hourCount ++;
 			}
 			else{
-				printSummary(CounterDate.getMonthString(counter.getDate().get(i).getMonth())
+				printSummary(CounterDate.getMonthString(counter.getDates().get(i).getMonth())
 						//+" "+counter.getDate().get(i).getWeek()
-						+" "+counter.getDate().get(i).getDay()
-						+" "+ CounterDate.convertHours(counter.getDate().get(i).getHour()), 
+						+" "+counter.getDates().get(i).getDay()
+						+" "+ CounterDate.convertHours(counter.getDates().get(i).getHour()), 
 						hourCount);
 				hourCount = 1;
 			}
 		}
-		printSummary(CounterDate.getMonthString(counter.getDate().get(counter.getCount()-1).getMonth())
+		printSummary(CounterDate.getMonthString(counter.getDates().get(counter.getCount()-1).getMonth())
 				//+" "+counter.getDate().get(counter.getCount()-1).getWeek()+counter.getDate().get(counter.getCount()-1).getWeek()
-				+" "+counter.getDate().get(counter.getCount()-1).getDay()
-				+" "+ CounterDate.convertHours(counter.getDate().get(counter.getCount()-1).getHour()),
+				+" "+counter.getDates().get(counter.getCount()-1).getDay()
+				+" "+ CounterDate.convertHours(counter.getDates().get(counter.getCount()-1).getHour()),
 				hourCount);
 	}
 	private void getDaySummary(CounterModel counter){
 		
 		if(counter.getCount() == 1){
-			printSummary(CounterDate.getMonthString(counter.getDate().get(0).getMonth())
+			printSummary(CounterDate.getMonthString(counter.getDates().get(0).getMonth())
 					//+" "+counter.getDate().get(0).getWeek()
-					+" "+counter.getDate().get(0).getDay(),
+					+" "+counter.getDates().get(0).getDay(),
 					1);
 			return;
 		}
 		int dayCount = 1;
 		for(int i = 0; i< counter.getCount()-1; i++){
-			if(counter.getDate().get(i).getDay() == counter.getDate().get(i+1).getDay()){
+			if(counter.getDates().get(i).getDay() == counter.getDates().get(i+1).getDay()){
 				dayCount ++;
 			}
 			else{
-				printSummary(CounterDate.getMonthString(counter.getDate().get(i).getMonth())
+				printSummary(CounterDate.getMonthString(counter.getDates().get(i).getMonth())
 						//+" "+counter.getDate().get(i).getWeek()
-						+" "+counter.getDate().get(i).getDay(), 
+						+" "+counter.getDates().get(i).getDay(), 
 						dayCount);
 				dayCount = 1;
 			}
 		}
-		printSummary(CounterDate.getMonthString(counter.getDate().get(counter.getCount()-1).getMonth())
+		printSummary(CounterDate.getMonthString(counter.getDates().get(counter.getCount()-1).getMonth())
 				//+" "+counter.getDate().get(counter.getCount()-1).getWeek()+counter.getDate().get(counter.getCount()-1).getWeek()
-				+" "+counter.getDate().get(counter.getCount()-1).getDay(),
+				+" "+counter.getDates().get(counter.getCount()-1).getDay(),
 				dayCount);
 	}
 	private void getWeekSummary(CounterModel counter){
 		
 		if(counter.getCount() == 1){
 			printSummary(//CounterDate.getMonthString(counter.getDate().get(0).getMonth())
-					"Week "+counter.getDate().get(0).getWeek(),
+					"Week "+counter.getDates().get(0).getWeek(),
 					1);
 			return;
 		}
 		int weekCount = 1;
 		for(int i = 0; i< counter.getCount()-1; i++){
-			if(counter.getDate().get(i).getWeek() == counter.getDate().get(i+1).getWeek()){
+			if(counter.getDates().get(i).getWeek() == counter.getDates().get(i+1).getWeek()){
 				weekCount ++;
 			}
 			else{
 				printSummary(//CounterDate.getMonthString(counter.getDate().get(i).getMonth())
-						"Week "+counter.getDate().get(i).getWeek(), weekCount);
+						"Week "+counter.getDates().get(i).getWeek(), weekCount);
 				weekCount = 1;
 			}
 		}
 		printSummary(//CounterDate.getMonthString(counter.getDate().get(counter.getCount()-1).getMonth())
-				"Week "+counter.getDate().get(counter.getCount()-1).getWeek()+counter.getDate().get(counter.getCount()-1).getWeek(), 
+				"Week "+counter.getDates().get(counter.getCount()-1).getWeek()+counter.getDates().get(counter.getCount()-1).getWeek(), 
 				weekCount);
 	}
 	private void getMonthSummary(CounterModel counter){
 		
 		if(counter.getCount() == 1){
-			printSummary(CounterDate.getMonthString(counter.getDate().get(0).getMonth()), 1);
+			printSummary(CounterDate.getMonthString(counter.getDates().get(0).getMonth()), 1);
 			return;
 		}
 		int monthCount = 1;
 		for(int i = 0; i< counter.getCount()-1; i++){
-			if(counter.getDate().get(i).getMonth() == counter.getDate().get(i+1).getMonth()){
+			if(counter.getDates().get(i).getMonth() == counter.getDates().get(i+1).getMonth()){
 				monthCount ++;
 			}
 			else{
-				printSummary(CounterDate.getMonthString(counter.getDate().get(i).getMonth()), monthCount);
+				printSummary(CounterDate.getMonthString(counter.getDates().get(i).getMonth()), monthCount);
 				monthCount = 1;
 			}
 		}
-		printSummary(CounterDate.getMonthString(counter.getDate().get(counter.getCount()-1).getMonth()), monthCount);
+		printSummary(CounterDate.getMonthString(counter.getDates().get(counter.getCount()-1).getMonth()), monthCount);
 	}
 	
 

@@ -98,7 +98,7 @@ public class SelectCounterActivity extends Activity {
 	}
 	
 	public void resetCounter(){
-		counter.getDate().clear();
+		counter.getDates().clear();
 		addButtonMessage(counter.getName() + " HAS BEEN RESET \n Tap the screen to increment the count", true);
 		replaceAndSave();
 	}
