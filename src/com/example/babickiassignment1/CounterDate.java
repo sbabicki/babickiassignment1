@@ -19,7 +19,7 @@ public class CounterDate implements Serializable{
 	// constructor
 	public CounterDate( ) {
 		super();
-		this.hour = localCalendar.get(Calendar.HOUR_OF_DAY);
+		this.hour = localCalendar.get(Calendar.MILLISECOND);
 		this.day = localCalendar.get(Calendar.DAY_OF_MONTH);
 		this.week = localCalendar.get(Calendar.WEEK_OF_YEAR);
 		this.month = localCalendar.get(Calendar.MONTH);
@@ -75,6 +75,31 @@ public class CounterDate implements Serializable{
 			return stringMonth;
 	}
 
+	public int getValue(){
+
+        int hour;
+
+        int day;
+
+        int month;
+
+        int year;
+
+        hour = getHour();
+
+        day = getDay() * 100;
+
+        month = getMonth() * 10000;
+
+        year = getYear() * 1000000;
+
+        
+
+        return hour+day+month+year;
+
+        }
+	
+	
 	// getters and setters for the different times. setters not really needed
 	public int getHour() {
 		return hour;

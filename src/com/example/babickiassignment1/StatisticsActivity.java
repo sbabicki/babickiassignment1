@@ -37,6 +37,28 @@ public class StatisticsActivity extends Activity {
 	}
 	
 	private void counterStatistics() {
+		setup();
+		getSummary();
+	}
+	
+	private void totalStatistics() {
+		setup();
+         
+        ArrayList<CounterDate> totalList = countersFromFile.get(0).getDate();
+        ArrayList<CounterDate> newList;
+
+        // compare with each list
+        // first 2, add rest later
+         newList = countersFromFile.get(1).getDate();
+         totalList = compare(totalList, newList);
+         counter = new CounterModel("total");
+         counter.setDate(totalList);
+         
+ 		getSummary();
+	}
+
+	
+	public void setup(){
 		datesAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
 		list = (ListView)findViewById(R.id.stats);
 		list.setAdapter(datesAdapter);
@@ -53,8 +75,10 @@ public class StatisticsActivity extends Activity {
 			e.printStackTrace();
 			return;
 		}
-		
-		
+	}
+	
+	// collect the info for the summary
+	private void getSummary(){
 		if(counter.getCount()>0){
 			datesAdapter.add("By Hour: \n");
 			getHourSummary(counter);
@@ -68,7 +92,61 @@ public class StatisticsActivity extends Activity {
 			datesAdapter.add("By Month: \n");
 			getMonthSummary(counter);
 		}
+		else{
+			datesAdapter.add("By Hour: \nNo Counts \n");
+			datesAdapter.add("By Day: \nNo Counts \n");
+			datesAdapter.add("By Week: \nNo Counts \n");
+			datesAdapter.add("By Month: \nNo Counts \n");
+		}
 	}
+	
+	// print to stats to screen
+	private void printSummary (String dateInfo, int count){
+		datesAdapter.add(dateInfo + " -- " + count + "\n");
+	}
+	
+
+	// for total statistics - compare elements between 2 lists and add them all in order to the first list
+	private static ArrayList<CounterDate> compare(ArrayList<CounterDate> totalList, ArrayList<CounterDate> newList){  
+		int x = 0;
+		
+		// for each element in the secondList
+		for(int j = 0; j < newList.size(); j++){
+			
+			// compare to each element in the firstList
+			if(totalList.get(x).getValue() >= newList.get(j).getValue()){
+				
+				// if the element in the second list belongs before the element in the first list insert it into first list
+				totalList.add(x, newList.get(j));
+			 }
+			
+			// the the element in the second list is larger than the first list
+			else{
+				
+				// if we reach the end of the first list
+				if(x+1 >= totalList.size()){
+					
+					// add the rest of the second list to the first list
+					for(int s = j; s<newList.size(); s++){
+						totalList.add(newList.get(s));
+					}
+					// we are done
+					return totalList;
+				}
+				
+				// if not at the end of the first list then move to the next element of the first list
+				else{
+					x++;
+				}
+			}
+		}
+		
+		// return the first list with the new members added to it
+		return totalList;
+	}
+
+	
+	//////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	// there's got to be a better way of doing this...
 	private void getHourSummary(CounterModel counter){
@@ -170,62 +248,7 @@ public class StatisticsActivity extends Activity {
 		printSummary(CounterDate.getMonthString(counter.getDate().get(counter.getCount()-1).getMonth()), monthCount);
 	}
 	
-	private void printSummary (String dateInfo, int count){
-		datesAdapter.add(dateInfo + " -- " + count + "\n");
-	}
-	
-	// DO TOMORROW
-	private void totalStatistics() {
-		
-		// create a new array with all dates in order and send to counter statistics
-		
-		// ERROR CHECK: SIZE 0, DO LATER
-		ArrayList<CounterDate> totalList;
-		ArrayList<CounterDate> newList;
-		int x = 0;
-		totalList = countersFromFile.get(0).getDate();
-		
-		// compare with each list
-		for(int i = 1; i< countersFromFile.size(); i++){
-			newList = countersFromFile.get(i).getDate();
-			
-			//compare with each element in old list
-			for(int j = 0; j < newList.size()-1; j++){
-				if(totalList.get(x).getDay() > newList.get(j).getDay()){
-					totalList.add(x, newList.get(j));
-				}
-				else{
-					if(x+1 >= totalList.size()){
-						for(int s = j; s<newList.size(); s++){
-							totalList.add(newList.get(s));
-						}
-						return;
-					}
-					else{
-						x++;
-					}
-				}
-			}
-			
-		}
-		
-		if(counter.getCount() == 1){
-			//update
-			return;
-		}
-		int hourCount = 1;
-		for(int i = 0; i< counter.getCount()-1; i++){
-			if(counter.getDate().get(i).getHour() == counter.getDate().get(i+1).getHour()){
-				hourCount ++;
-			}
-			else{
-				//update
-				hourCount = 1;
-			}
-		}
-		//update 
-	
-	}
+
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
