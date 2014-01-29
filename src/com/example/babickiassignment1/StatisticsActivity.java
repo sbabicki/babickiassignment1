@@ -14,7 +14,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 public class StatisticsActivity extends Activity {
-	int position;
+	int position = -1;
 	ListView list;
 	ArrayAdapter<String> datesAdapter;
 	ArrayList <CounterModel> countersFromFile;
@@ -55,6 +55,7 @@ public class StatisticsActivity extends Activity {
             	totalList = compare(totalList, countersFromFile.get(i).getDates());
             }
 
+            // create a new counter of total counts to do counter statistics on 
             counter = new CounterModel("total");
             counter.setDate(totalList);
         }
@@ -75,7 +76,13 @@ public class StatisticsActivity extends Activity {
 		
 		try {
 			countersFromFile = StoreData.readFromFile(getApplicationContext());
-			counter = countersFromFile.get(position);
+			
+			// position only used for counterstats
+			if(position > 0){
+				counter = countersFromFile.get(position);
+			}
+
+
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -140,7 +147,7 @@ public class StatisticsActivity extends Activity {
 			else{
 				
 				// if we reach the end of the first list
-				if(x+1 >= totalList.size()){
+				if(x == totalList.size()-1){
 					
 					// add the rest of the second list to the first list
 					for(int s = j; s < newList.size(); s++){
@@ -153,6 +160,9 @@ public class StatisticsActivity extends Activity {
 				// if not at the end of the first list then move to the next element of the first list
 				else{
 					x++;
+					
+					// we need to offset j++ since we still have to find a place for the current
+					j--;
 				}
 			}
 		}
@@ -169,7 +179,6 @@ public class StatisticsActivity extends Activity {
 		
 		if(counter.getCount() == 1){
 			printSummary(CounterDate.getMonthString(counter.getDates().get(0).getMonth())
-					//+" "+counter.getDate().get(0).getWeek()
 					+" "+counter.getDates().get(0).getDay()
 					+" "+ CounterDate.convertHours(counter.getDates().get(0).getHour()), 
 					1);
@@ -182,7 +191,6 @@ public class StatisticsActivity extends Activity {
 			}
 			else{
 				printSummary(CounterDate.getMonthString(counter.getDates().get(i).getMonth())
-						//+" "+counter.getDate().get(i).getWeek()
 						+" "+counter.getDates().get(i).getDay()
 						+" "+ CounterDate.convertHours(counter.getDates().get(i).getHour()), 
 						hourCount);
@@ -190,7 +198,6 @@ public class StatisticsActivity extends Activity {
 			}
 		}
 		printSummary(CounterDate.getMonthString(counter.getDates().get(counter.getCount()-1).getMonth())
-				//+" "+counter.getDate().get(counter.getCount()-1).getWeek()+counter.getDate().get(counter.getCount()-1).getWeek()
 				+" "+counter.getDates().get(counter.getCount()-1).getDay()
 				+" "+ CounterDate.convertHours(counter.getDates().get(counter.getCount()-1).getHour()),
 				hourCount);
@@ -199,7 +206,6 @@ public class StatisticsActivity extends Activity {
 		
 		if(counter.getCount() == 1){
 			printSummary(CounterDate.getMonthString(counter.getDates().get(0).getMonth())
-					//+" "+counter.getDate().get(0).getWeek()
 					+" "+counter.getDates().get(0).getDay(),
 					1);
 			return;
@@ -211,22 +217,19 @@ public class StatisticsActivity extends Activity {
 			}
 			else{
 				printSummary(CounterDate.getMonthString(counter.getDates().get(i).getMonth())
-						//+" "+counter.getDate().get(i).getWeek()
 						+" "+counter.getDates().get(i).getDay(), 
 						dayCount);
 				dayCount = 1;
 			}
 		}
 		printSummary(CounterDate.getMonthString(counter.getDates().get(counter.getCount()-1).getMonth())
-				//+" "+counter.getDate().get(counter.getCount()-1).getWeek()+counter.getDate().get(counter.getCount()-1).getWeek()
 				+" "+counter.getDates().get(counter.getCount()-1).getDay(),
 				dayCount);
 	}
 	private void getWeekSummary(CounterModel counter){
 		
 		if(counter.getCount() == 1){
-			printSummary(//CounterDate.getMonthString(counter.getDate().get(0).getMonth())
-					"Week "+counter.getDates().get(0).getWeek(),
+			printSummary("Week "+counter.getDates().get(0).getWeek(),
 					1);
 			return;
 		}
@@ -236,13 +239,11 @@ public class StatisticsActivity extends Activity {
 				weekCount ++;
 			}
 			else{
-				printSummary(//CounterDate.getMonthString(counter.getDate().get(i).getMonth())
-						"Week "+counter.getDates().get(i).getWeek(), weekCount);
+				printSummary("Week "+counter.getDates().get(i).getWeek(), weekCount);
 				weekCount = 1;
 			}
 		}
-		printSummary(//CounterDate.getMonthString(counter.getDate().get(counter.getCount()-1).getMonth())
-				"Week "+counter.getDates().get(counter.getCount()-1).getWeek(), 
+		printSummary("Week "+counter.getDates().get(counter.getCount()-1).getWeek(), 
 				weekCount);
 	}
 	private void getMonthSummary(CounterModel counter){
