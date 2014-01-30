@@ -10,7 +10,7 @@ import java.util.TimeZone;
  */
 public class CounterDate implements Serializable{
 
-	// date information
+	// Date information
 	private int hour;
 	private int day;
 	private int week;
@@ -20,7 +20,7 @@ public class CounterDate implements Serializable{
 	
 	Calendar localCalendar = Calendar.getInstance(TimeZone.getDefault());
 	
-	// constructor
+	// Constructor
 	public CounterDate() {
 		super();
 		this.hour = localCalendar.get(Calendar.HOUR_OF_DAY);
@@ -31,7 +31,7 @@ public class CounterDate implements Serializable{
 		this.dayOfYear = localCalendar.get(Calendar.DAY_OF_YEAR);
 	}
 	
-	// converts 24 hour to 12 hour am/pm time
+	// Converts 24 hour to 12 hour am/pm time
 	public String convertHours (){
 	
 		if(hour>12){
@@ -45,7 +45,7 @@ public class CounterDate implements Serializable{
 		}
 	}
 	
-	// returns a string representing month
+	// Returns a string representing month
 	public String getMonthString(){
 		
 		String stringMonth;
@@ -82,7 +82,7 @@ public class CounterDate implements Serializable{
 			return stringMonth;
 	}
 	
-	// returns the first day of a week. eg: 28
+	// Returns the first day of a week. eg: 28
 	public int getDayOfWeek(){
 		
 		int dayOffset;
@@ -99,7 +99,7 @@ public class CounterDate implements Serializable{
 		return newDay;
 	}
 	
-	// creates a value to represent a date. larger value = later date
+	// Creates a value to represent a date. larger value = later date
 	public int getValue(){
 
         int hourValue;
@@ -115,12 +115,11 @@ public class CounterDate implements Serializable{
         return hourValue + dayValue + monthValue + yearValue;   
 	}
 	
-	// getters and setters for the different times. setters not really needed
+	// Getters and setters for the different times. Setters not really needed
 	public int getHour() {
 		return hour;
 	}
 
-	// getters and setters
 	public void setHour(int hour) {
 		this.hour = hour;
 	}

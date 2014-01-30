@@ -1,12 +1,7 @@
 package com.example.babickiassignment1;
 
-
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -15,10 +10,16 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.view.View;
-import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.EditText;
 
+/* CountersActivity
+ * - First activity + main page
+ * - Displays all the counters and their current counts in a listview
+ * - Loads counter information from file
+ */
 public class CountersActivity extends Activity {
+	
+	// All current counters are stored in the counters arraylist
 	ArrayList<CounterModel> counters;
 	ArrayAdapter<String> countersAdapter;
 	ListView countersListView;
@@ -28,7 +29,7 @@ public class CountersActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_counters);
 		
-		// set up arraylist adapter for updating to screen dynamically
+		// set listview variable
 		countersListView = (ListView) findViewById(R.id.countersList);
 		
 		// respond to clicks on listview elements
@@ -41,11 +42,10 @@ public class CountersActivity extends Activity {
 		// try to get old data
 		try {
 			counters = StoreData.readFromFile(getApplicationContext());
+			
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -54,25 +54,26 @@ public class CountersActivity extends Activity {
 			counters = new ArrayList<CounterModel>();
 		}
 		
-		countersAdapter = new ArrayAdapter<String>(this, 
-				android.R.layout.simple_list_item_1);
+		// set up the adapter for updating to listview on screen dynamically
+		countersAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
 		
 		// populate the array adapter if there is stuff to print
-		for(int i = 0; i< counters.size(); i++){
-			countersAdapter.add(counters.get(i).getName()+": "+counters.get(i).getCount());
+		for(int i = 0; i < counters.size(); i++){
+			countersAdapter.add(counters.get(i).getName() + ": " + counters.get(i).getCount());
 		}
+		
+		// connect the adapter with the listview
 		countersListView.setAdapter(countersAdapter);
 	}
 	
-	
-	// Go to activity for a specific counter
+	// Go to activity for a specific counter when counter clicked
 	private void setupListViewListener() {
 		countersListView.setOnItemClickListener(new OnItemClickListener(){
 			@Override
 			public void onItemClick(android.widget.AdapterView<?> parent,
 					android.view.View view, int position, long rowId) {
 				
-				// go to diff activity
+				// go to a different activity
 				switchActivity(position);
 			}
 		});
@@ -80,6 +81,7 @@ public class CountersActivity extends Activity {
 	
 	// Go to the SelectCounter activity
 	public void switchActivity(int position){
+		
 		Intent intent = new Intent(this, SelectCounterActivity.class);
 		
 		// pass over the index of interest for the counters arraylist
@@ -87,36 +89,34 @@ public class CountersActivity extends Activity {
 		startActivity(intent);
 	}
 	
-	
-	// Add new counter
-	public void addNewCounter(View v) throws ClassNotFoundException, IOException{
+	// Add new counter. Method required to be type public void w/ view parameter 
+	public void addNewCounter(View v){
 		
 		// create new counter with specified name
-		EditText etNewItem = (EditText) findViewById(R.id.etNewItem);
-		CounterModel addCounter = new CounterModel(etNewItem.getText().toString());
+		EditText newCounterItem = (EditText) findViewById(R.id.newCounterItem);
+		CounterModel addCounter = new CounterModel(newCounterItem.getText().toString());
 		
-		// hacky error checking. REDO IF HAVE TIME
+		// hack-y error checking. WILL REDO IF HAVE TIME.
 		if(addCounter.getName().equals("")){
 			addCounter.setName("(blank)");
 		}
 		
 		// add the new counter to the counters arraylist and adapter
 		counters.add(addCounter);
-		countersAdapter.add(addCounter.getName()+": "+addCounter.getCount());
+		countersAdapter.add(addCounter.getName() + ": " + addCounter.getCount());
 		
 		// remove text in the add bar
-		etNewItem.setText("");
+		newCounterItem.setText("");
 		
 		// save the updated arraylist of counters to file system
 		StoreData.saveInFile(getApplicationContext(), counters);
 	}
 
-
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
+		
+		// counters menu is on the main page - has no options
 		getMenuInflater().inflate(R.menu.counters, menu);
 		return true;
 	}
-
 }

@@ -30,9 +30,9 @@ public final class R {
         public static final int counter_name=0x7f080007;
         public static final int counter_stats=0x7f08000e;
         public static final int countersList=0x7f080002;
-        public static final int etNewItem=0x7f080000;
         public static final int home=0x7f08000a;
         public static final int home_from_stats=0x7f080010;
+        public static final int newCounterItem=0x7f080000;
         public static final int remove_counter=0x7f08000b;
         public static final int rename_counter=0x7f08000d;
         public static final int rename_counter_button=0x7f080004;

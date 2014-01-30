@@ -11,30 +11,30 @@ import java.util.ArrayList;
  */
 public class CounterModel implements Serializable{
 
-	// name of counter
+	// Name of counter
 	private String name;
 	
-	// date info for counter
+	// Date info for counter
 	private ArrayList<CounterDate> datesList;
 	
-	// constructor
+	// Constructor
 	public CounterModel(String name) {
 		super();
 		this.name = name;
 		this.datesList = new ArrayList<CounterDate>();
 	}
 	
-	// add a CounterDate to the arraylist
+	// Add a CounterDate to the arraylist
 	public void addCount(){
 		datesList.add(new CounterDate());
 	}
 	
-	// the size of the array = # counts
+	// The size of the array = # counts
 	public int getCount(){
 		return datesList.size();
 	}
 
-	// getters and setters
+	// Getters and setters
 	public String getName() {
 		return name;
 	}
