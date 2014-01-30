@@ -101,13 +101,13 @@ public class SelectCounterActivity extends Activity {
 	}
 	
 	// Return to homepage (CountersActivity)
-	public void returnHome(){
+	private void returnHome(){
 		Intent intent = new Intent(this, CountersActivity.class);
 		startActivity(intent); 
 	}
 	
 	// Delete a counter
-	public void removeCounter(){
+	private void removeCounter(){
 		
 		// remove counter from arraylist and save the updated list to file
 		countersFromFile.remove(position);
@@ -121,7 +121,7 @@ public class SelectCounterActivity extends Activity {
 	}
 	
 	// Reset a counter
-	public void resetCounter(){
+	private void resetCounter(){
 		
 		// remove all the CounterDate data for the counter = set count to zero
 		counter.getDates().clear();
@@ -131,12 +131,15 @@ public class SelectCounterActivity extends Activity {
 		countersFromFile.remove(position);
 		countersFromFile.add(counter);
 		
+		//change index of counter to it's new position
+		position = countersFromFile.size() - 1;
+		
 		// save file
 		StoreData.saveInFile(getApplicationContext(), countersFromFile);
 	}
 	
 	// Rename a counter - dealt with by RenameActivity class
-	public void renameCounter(){
+	private void renameCounter(){
 		
 		// go to RenameActivity
 		Intent intent = new Intent(this, RenameCounterActivity.class);
@@ -145,7 +148,7 @@ public class SelectCounterActivity extends Activity {
 	}
 	
 	// Start StatisticsActivity with position extra
-	public void counterStats(){
+	private void counterStats(){
 		
 		Intent intent = new Intent(this, StatisticsActivity.class);
 		intent.putExtra("position", position);
@@ -153,7 +156,7 @@ public class SelectCounterActivity extends Activity {
 	}
 	
 	// Start StatisticsActivity with no extras
-	public void totalStats(){
+	private void totalStats(){
 		
 		Intent intent = new Intent(this, StatisticsActivity.class);
 		startActivity(intent);
@@ -181,7 +184,7 @@ public class SelectCounterActivity extends Activity {
 	
 	// Sort in descending order, assumes rest of list is in order and count only increases
 	// NOTE: sorting only works if all stored data is created by this program
-	public void sort(){
+	private void sort(){
 		for(int i = 0; i < position; i ++){
 			if(counter.getCount() > countersFromFile.get(i).getCount()){
 							
@@ -192,14 +195,14 @@ public class SelectCounterActivity extends Activity {
 	}
 	
 	// Swaps positions - for sorting
-	public void swap(CounterModel oldCounter, int newPosition){
+	private void swap(CounterModel oldCounter, int newPosition){
 		countersFromFile.set(position, oldCounter);
 		countersFromFile.set(newPosition, counter);
 		position = newPosition;
 	}
 	
 	// Replaces the old instance of the counter with the new one and saves to file
-	public void replaceAndSave (){
+	private void replaceAndSave(){
 		
 		// replace the old counter with the new one 
 		countersFromFile.set(position, counter);
@@ -209,7 +212,7 @@ public class SelectCounterActivity extends Activity {
 	}
 	
 	// Set the count button to display a message and possibly the count (based on boolean count)
-	public void addButtonMessage (String text, Boolean count){
+	private void addButtonMessage (String text, Boolean count){
 		Button countButton = (Button)findViewById(R.id.count_button);
 		if(count == true){
 			countButton.setText(text + "\n" + counter.getCount());

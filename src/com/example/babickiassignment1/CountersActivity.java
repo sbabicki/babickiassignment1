@@ -81,7 +81,7 @@ public class CountersActivity extends Activity {
 	}
 	
 	// Go to the SelectCounter activity
-	public void switchActivity(int position){
+	private void switchActivity(int position){
 		
 		Intent intent = new Intent(this, SelectCounterActivity.class);
 		

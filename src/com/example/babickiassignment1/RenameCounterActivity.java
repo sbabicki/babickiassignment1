@@ -72,7 +72,7 @@ public class RenameCounterActivity extends Activity {
 	}
 	
 	// Replaces the old instance of the counter with the new one and saves to file
-	public void replaceAndSave (){
+	private void replaceAndSave (){
 		
 		// replace the old counter with the new one 
 		countersFromFile.set(position, counter);

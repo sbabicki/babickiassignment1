@@ -79,7 +79,7 @@ public class StatisticsActivity extends Activity {
 	}
 
 	// Set up the listview/adapter stuff and fetch counters from file
-	public void setup(){
+	private void setup(){
 		datesAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
 		list = (ListView)findViewById(R.id.stats);
 		list.setAdapter(datesAdapter);
@@ -312,7 +312,7 @@ public class StatisticsActivity extends Activity {
 	}
 	
 	// Return to CountersActivity when home option on menu is clicked
-	public void returnHome(){
+	private void returnHome(){
 		Intent intent = new Intent(this, CountersActivity.class);
 		startActivity(intent); 
 	}
