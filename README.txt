@@ -15,7 +15,8 @@ Usage:
 
 Program Walkthrough: 
 Main page - View a list of all Counters
-- Add new counter by typing the desired name of the counter at the bottom of the screen. Then press the Add button to submit your changes.
+- Add new counter by typing the desired name of the counter at the bottom of the screen. 
+  Then press the Add button to submit your changes.
 - View options for a specific counter by pressing that counter. 
 
 Select Counter - Update the count and view counter options
