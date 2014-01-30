@@ -78,7 +78,7 @@ public class StatisticsActivity extends Activity {
 			countersFromFile = StoreData.readFromFile(getApplicationContext());
 			
 			// position only used for counterstats
-			if(position > 0){
+			if(position >= 0){
 				counter = countersFromFile.get(position);
 			}
 
@@ -178,9 +178,9 @@ public class StatisticsActivity extends Activity {
 	private void getHourSummary(CounterModel counter){
 		
 		if(counter.getCount() == 1){
-			printSummary(CounterDate.getMonthString(counter.getDates().get(0).getMonth())
-					+" "+counter.getDates().get(0).getDay()
-					+" "+ CounterDate.convertHours(counter.getDates().get(0).getHour()), 
+			printSummary(counter.getDates().get(0).getMonthString()
+					+" "+ counter.getDates().get(0).getDay()
+					+" "+ counter.getDates().get(0).convertHours(), 
 					1);
 			return;
 		}
@@ -190,22 +190,22 @@ public class StatisticsActivity extends Activity {
 				hourCount ++;
 			}
 			else{
-				printSummary(CounterDate.getMonthString(counter.getDates().get(i).getMonth())
-						+" "+counter.getDates().get(i).getDay()
-						+" "+ CounterDate.convertHours(counter.getDates().get(i).getHour()), 
+				printSummary(counter.getDates().get(i).getMonthString()
+						+" "+ counter.getDates().get(i).getDay()
+						+" "+ counter.getDates().get(i).convertHours(), 
 						hourCount);
 				hourCount = 1;
 			}
 		}
-		printSummary(CounterDate.getMonthString(counter.getDates().get(counter.getCount()-1).getMonth())
-				+" "+counter.getDates().get(counter.getCount()-1).getDay()
-				+" "+ CounterDate.convertHours(counter.getDates().get(counter.getCount()-1).getHour()),
+		printSummary(counter.getDates().get(counter.getCount()-1).getMonthString()
+				+" "+ counter.getDates().get(counter.getCount()-1).getDay()
+				+" "+ counter.getDates().get(counter.getCount()-1).convertHours(),
 				hourCount);
 	}
 	private void getDaySummary(CounterModel counter){
 		
 		if(counter.getCount() == 1){
-			printSummary(CounterDate.getMonthString(counter.getDates().get(0).getMonth())
+			printSummary(counter.getDates().get(0).getMonthString()
 					+" "+counter.getDates().get(0).getDay(),
 					1);
 			return;
@@ -216,20 +216,21 @@ public class StatisticsActivity extends Activity {
 				dayCount ++;
 			}
 			else{
-				printSummary(CounterDate.getMonthString(counter.getDates().get(i).getMonth())
+				printSummary(counter.getDates().get(i).getMonthString()
 						+" "+counter.getDates().get(i).getDay(), 
 						dayCount);
 				dayCount = 1;
 			}
 		}
-		printSummary(CounterDate.getMonthString(counter.getDates().get(counter.getCount()-1).getMonth())
+		printSummary(counter.getDates().get(counter.getCount()-1).getMonthString()
 				+" "+counter.getDates().get(counter.getCount()-1).getDay(),
 				dayCount);
 	}
 	private void getWeekSummary(CounterModel counter){
 		
 		if(counter.getCount() == 1){
-			printSummary("Week "+counter.getDates().get(0).getWeek(),
+			printSummary("Week of "+ counter.getDates().get(0).getMonthString() 
+					+ " " + counter.getDates().get(0).getDayOfWeek(),
 					1);
 			return;
 		}
@@ -239,17 +240,19 @@ public class StatisticsActivity extends Activity {
 				weekCount ++;
 			}
 			else{
-				printSummary("Week "+counter.getDates().get(i).getWeek(), weekCount);
+				printSummary("Week of "+ counter.getDates().get(i).getMonthString() 
+						+ " " + counter.getDates().get(i).getDayOfWeek(), weekCount);
 				weekCount = 1;
 			}
 		}
-		printSummary("Week "+counter.getDates().get(counter.getCount()-1).getWeek(), 
+		printSummary("Week of "+ counter.getDates().get(counter.getCount()-1).getMonthString() 
+				+ " " + counter.getDates().get(counter.getCount()-1).getDayOfWeek(), 
 				weekCount);
 	}
 	private void getMonthSummary(CounterModel counter){
 		
 		if(counter.getCount() == 1){
-			printSummary(CounterDate.getMonthString(counter.getDates().get(0).getMonth()), 1);
+			printSummary(counter.getDates().get(0).getMonthString(), 1);
 			return;
 		}
 		int monthCount = 1;
@@ -258,11 +261,11 @@ public class StatisticsActivity extends Activity {
 				monthCount ++;
 			}
 			else{
-				printSummary(CounterDate.getMonthString(counter.getDates().get(i).getMonth()), monthCount);
+				printSummary(counter.getDates().get(i).getMonthString(), monthCount);
 				monthCount = 1;
 			}
 		}
-		printSummary(CounterDate.getMonthString(counter.getDates().get(counter.getCount()-1).getMonth()), monthCount);
+		printSummary(counter.getDates().get(counter.getCount()-1).getMonthString(), monthCount);
 	}
 	
 

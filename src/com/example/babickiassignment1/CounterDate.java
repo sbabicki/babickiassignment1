@@ -6,13 +6,13 @@ import java.util.TimeZone;
 
 public class CounterDate implements Serializable{
 
-	
 	// date information
 	private int hour;
 	private int day;
 	private int week;
 	private int month;
 	private int year;
+	private int dayOfYear;
 	
 	Calendar localCalendar = Calendar.getInstance(TimeZone.getDefault());
 	
@@ -24,10 +24,12 @@ public class CounterDate implements Serializable{
 		this.week = localCalendar.get(Calendar.WEEK_OF_YEAR);
 		this.month = localCalendar.get(Calendar.MONTH);
 		this.year = localCalendar.get(Calendar.YEAR);
+		this.dayOfYear = localCalendar.get(Calendar.DAY_OF_YEAR);
 	}
 	
 	// converts 24 hour to 12 hour am/pm time
-	public static String convertHours (int hour){
+	public String convertHours ( ){
+	
 		if(hour>12){
 			return hour-12+":00 PM";
 		}
@@ -40,10 +42,10 @@ public class CounterDate implements Serializable{
 	}
 	
 	// returns a string representing month
-	public static String getMonthString(int intMonth){
+	public String getMonthString( ){
 		String stringMonth;
 		
-		switch (intMonth) {
+		switch (month) {
 			case 0: stringMonth = "January";
 			break;
 			case 1: stringMonth = "February";
@@ -74,30 +76,39 @@ public class CounterDate implements Serializable{
 		
 			return stringMonth;
 	}
+	
+	// returns the first day of a week. eg: 28
+	public int getDayOfWeek(){
+		
+		int dayOffset;
+		
+		// first week starts with 1
+		if(dayOfYear <= 7){
+			return 1;
+		}
+		
+		dayOffset = dayOfYear - ((week-1)*7);
+		dayOfYear = dayOfYear - dayOffset;
+		
+		return dayOfYear;
+	}
+	
 
 	public int getValue(){
 
         int hour;
-
         int day;
-
         int month;
-
         int year;
 
         hour = getHour();
-
         day = getDay() * 100;
-
         month = getMonth() * 10000;
-
         year = getYear() * 1000000;
-
         
-
         return hour+day+month+year;
-
-        }
+        
+	}
 	
 	
 	// getters and setters for the different times. setters not really needed
@@ -141,6 +152,11 @@ public class CounterDate implements Serializable{
 		this.year = year;
 	}
 	
-	
-	
+	public int dayOfYear() {
+		return dayOfYear;
+	}
+
+	public void dayOfYear(int dayOfYear) {
+		this.dayOfYear = dayOfYear;
+	}
 }
