@@ -15,6 +15,7 @@ import android.widget.EditText;
 /* CountersActivity
  * - First activity + main page
  * - Displays all the counters and their current counts in a listview
+ * - Responds to user clicking a counter by switching to a different activity
  * - Loads counter information from file
  */
 public class CountersActivity extends Activity {

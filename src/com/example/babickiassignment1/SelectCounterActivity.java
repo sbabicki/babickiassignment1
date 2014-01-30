@@ -12,11 +12,25 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-
+/* SelectCounterActivity
+ * - Displays the count of an individual counter
+ * - Allows the user to update the count of the counter
+ * - Continually sorts counters by finding correct ordering within list of counters whenever count++
+ * - Contains menu with options to edit the counter and view stats
+ * 		Menu Items:
+ * 		- home -> starts CountersActivity
+ * 		- remove -> deletes the counter from the counters arraylist and saves change
+ * 		- reset -> removes the CounterDate info from the counter
+ * 		- rename -> handled by RenameActivity
+ * 		- counter statistics -> handled by StatisticsActivity
+ * 		- total statistics -> handled by StatisticsActivity
+ */
 public class SelectCounterActivity extends Activity {
+	
+	// Index of counter of interest in the arraylist of counters
 	int position;
 	ArrayList <CounterModel> countersFromFile;
-	CounterModel counter = null;
+	CounterModel counter;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -29,13 +43,14 @@ public class SelectCounterActivity extends Activity {
 		position = intent.getIntExtra("position", -1);
 		
 		// if the position is valid try to read from the file to get the counters arraylist
-		if (position >= 0 ) {
+		if (position >= 0) {
 			
 			// counter = counter of interest
 			try {
 				countersFromFile = StoreData.readFromFile(getApplicationContext());
 				counter = countersFromFile.get(position);
 
+				// display the counter name on the screen
 				TextView counterName = (TextView)findViewById(R.id.counter_name);
 				counterName.setText(counter.getName());
 				
@@ -46,19 +61,21 @@ public class SelectCounterActivity extends Activity {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
 			addButtonMessage("Tap the screen to increment the count", true);
 		}
 	}
 
+	// The select_counter menu has all the options for editing an existing counter
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.select_counter, menu);
 		return true;
 	}
 	
+	// Handle item selection
 	public boolean onOptionsItemSelected(MenuItem item) {
-	    // Handle item selection
+	    
 	    switch (item.getItemId()) {
 	    	case R.id.home:
 	    		returnHome();
@@ -83,47 +100,61 @@ public class SelectCounterActivity extends Activity {
 	    }
 	}
 	
+	// Return to homepage (CountersActivity)
 	public void returnHome(){
 		Intent intent = new Intent(this, CountersActivity.class);
 		startActivity(intent); 
 	}
 	
+	// Delete a counter
 	public void removeCounter(){
+		
+		// remove counter from arraylist and save the updated list to file
 		countersFromFile.remove(position);
 		if(StoreData.saveInFile(getApplicationContext(), countersFromFile) == 0){
 			addButtonMessage("ERROR SAVING FILE:(", false);
 		}
+		
+		// return to CountersActivity once counter is deleted
 		Intent intent = new Intent(this, CountersActivity.class);
 		startActivity(intent); 
 	}
 	
+	// Reset a counter
 	public void resetCounter(){
+		
+		// remove all the CounterDate data for the counter = set count to zero
 		counter.getDates().clear();
 		addButtonMessage(counter.getName() + " HAS BEEN RESET \n Tap the screen to increment the count", true);
 		replaceAndSave();
 	}
 	
+	// Rename a counter - dealt with by RenameActivity class
 	public void renameCounter(){
+		
+		// go to RenameActivity
 		Intent intent = new Intent(this, RenameCounterActivity.class);
 		intent.putExtra("position", position);
 		startActivity(intent);
 	}
 	
-	// start activity with position extra
+	// Start StatisticsActivity with position extra
 	public void counterStats(){
+		
 		Intent intent = new Intent(this, StatisticsActivity.class);
 		intent.putExtra("position", position);
 		startActivity(intent);
 	}
 	
-	// start activity with no extras
+	// Start StatisticsActivity with no extras
 	public void totalStats(){
+		
 		Intent intent = new Intent(this, StatisticsActivity.class);
 		startActivity(intent);
 	}
 	
-	// Increase the count 
-	public void changeButtonText(View v) throws ClassNotFoundException, IOException{
+	// Called when button is pressed. Increase the counters count by 1
+	public void changeButtonText(View v){
 		
 		// if the read or position worked properly add count
 		if (counter != null){
@@ -131,12 +162,12 @@ public class SelectCounterActivity extends Activity {
 			// count ++
 			counter.addCount();
 			
-			// sort
+			// sort in descending order
+			// NOTE: sorting only works if all stored data is created by this program
 			for(int i = 0; i < position; i ++){
-				if(counter.getCount() <= countersFromFile.get(i).getCount()){
-					// we are in the right position
-				}
-				else{
+				if(counter.getCount() > countersFromFile.get(i).getCount()){
+					
+					// if we are in the wrong position swap with neighbor
 					swap(countersFromFile.get(i), i);
 				}
 			}
@@ -144,31 +175,30 @@ public class SelectCounterActivity extends Activity {
 			// update the button text
 			addButtonMessage("Tap the screen to increment the count", true);
 			replaceAndSave();
-			
 		}
 		else{
 			addButtonMessage("ERROR READING FILE:(", false);
 		}
 	}
 	
-	// swaps positions - for sorting
+	// Swaps positions - for sorting
 	public void swap(CounterModel oldCounter, int newPosition){
 		countersFromFile.set(position, oldCounter);
 		countersFromFile.set(newPosition, counter);
 		position = newPosition;
 	}
 	
-	// replaces the old instance of the counter with the new one and saves to file
+	// Replaces the old instance of the counter with the new one and saves to file
 	public void replaceAndSave (){
 		
-		// replace the old counter with the new one
+		// replace the old counter with the new one 
 		countersFromFile.set(position, counter);
 		if(StoreData.saveInFile(getApplicationContext(), countersFromFile) == 0){
 			addButtonMessage("ERROR SAVING FILE:(", false);
 		}
 	}
 	
-	// Set the count button to display a message and possibly the count
+	// Set the count button to display a message and possibly the count (based on boolean count)
 	public void addButtonMessage (String text, Boolean count){
 		Button countButton = (Button)findViewById(R.id.count_button);
 		if(count == true){
