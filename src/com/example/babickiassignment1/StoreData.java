@@ -18,7 +18,7 @@ import java.util.ArrayList;
  */
 public class StoreData {
 	
-	private static final String FILENAME = "mike.sav";
+	private static final String FILENAME = "goat.sav";
 	
 	// Saves an ArrayList of CounterModels in a file
 	public static int saveInFile(Context context, ArrayList <CounterModel> counters){
