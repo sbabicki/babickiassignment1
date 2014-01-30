@@ -9,7 +9,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.util.ArrayList;
 
 
@@ -17,7 +16,7 @@ public class StoreData {
 	private static final String FILENAME = "mike2.sav";
 
 	public StoreData() {
-		// TODO Auto-generated constructor stub
+		
 	}
 	
 	// saves an arraylist in file
