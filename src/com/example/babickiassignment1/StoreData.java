@@ -20,7 +20,7 @@ public class StoreData {
 	
 	private static final String FILENAME = "goat.sav";
 	
-	// Saves an ArrayList of CounterModels in a file
+	// Saves an ArrayList of Counters in a file
 	public static int saveInFile(Context context, ArrayList <Counter> counters){
 		try{
 			// writes over old file
@@ -57,7 +57,7 @@ public class StoreData {
 	      }catch(IOException i) {
 	         i.printStackTrace();
 	      }catch(ClassNotFoundException c){
-	         System.out.println("CounterModel class not found");
+	         System.out.println("Counter class not found");
 	         c.printStackTrace();
 	      }
 	      return null;	

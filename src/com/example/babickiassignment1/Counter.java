@@ -3,11 +3,11 @@ package com.example.babickiassignment1;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-/* CounterModel
+/* Counter
  * - Object to store counters -> stores name & date info
  * - Stores date information in an arraylist of CounterDates
  * - Each time a CounterDate is added to the arraylist the count is increased
- * - A string must be passed to the constructor to create a new CounterModel 
+ * - A string must be passed to the constructor to create a new  
  */
 public class Counter implements Serializable{
 
