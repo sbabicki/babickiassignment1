@@ -126,7 +126,13 @@ public class SelectCounterActivity extends Activity {
 		// remove all the CounterDate data for the counter = set count to zero
 		counter.getDates().clear();
 		addButtonMessage(counter.getName() + " HAS BEEN RESET \n Tap the screen to increment the count", true);
-		replaceAndSave();
+		
+		// now that count is zero, place at end of the list
+		countersFromFile.remove(position);
+		countersFromFile.add(counter);
+		
+		// save file
+		StoreData.saveInFile(getApplicationContext(), countersFromFile);
 	}
 	
 	// Rename a counter - dealt with by RenameActivity class
@@ -162,15 +168,7 @@ public class SelectCounterActivity extends Activity {
 			// count ++
 			counter.addCount();
 			
-			// sort in descending order
-			// NOTE: sorting only works if all stored data is created by this program
-			for(int i = 0; i < position; i ++){
-				if(counter.getCount() > countersFromFile.get(i).getCount()){
-					
-					// if we are in the wrong position swap with neighbor
-					swap(countersFromFile.get(i), i);
-				}
-			}
+			sort();
 			
 			// update the button text
 			addButtonMessage("Tap the screen to increment the count", true);
@@ -179,6 +177,18 @@ public class SelectCounterActivity extends Activity {
 		else{
 			addButtonMessage("ERROR READING FILE:(", false);
 		}
+	}
+	
+	// Sort in descending order, assumes rest of list is in order and count only increases
+	// NOTE: sorting only works if all stored data is created by this program
+	public void sort(){
+		for(int i = 0; i < position; i ++){
+			if(counter.getCount() > countersFromFile.get(i).getCount()){
+							
+				// if we are in the wrong position swap with neighbor
+				swap(countersFromFile.get(i), i);
+			}
+		}	
 	}
 	
 	// Swaps positions - for sorting
