@@ -9,16 +9,20 @@ import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
-import android.widget.ExpandableListAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
+/* StatisticsActivity
+ * - Displays a listview of the counter statistics
+ * - Statistics are printed by hour, day, week, and month
+ * - Calculates total stats by sorting CounterDates from all counters into one list and treating as counter
+ */
 public class StatisticsActivity extends Activity {
-	int position = -1;
+	
 	ListView list;
 	ArrayAdapter<String> datesAdapter;
 	ArrayList <CounterModel> countersFromFile;
 	CounterModel counter = null;
+	int position = -1;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -27,20 +31,26 @@ public class StatisticsActivity extends Activity {
 		
 		Intent intent;
 		intent = getIntent();
+		
+		// if index position sent here, use counterStatistics
 		if(intent.hasExtra("position")){
 			position = intent.getIntExtra("position", -1);
 			counterStatistics();
 		}
+		
+		// if index position is not given, use totalStatistics
 		else{
 			totalStatistics();
 		}
 	}
 	
+	// Print the statistics for a specific counter
 	private void counterStatistics() {
 		setup();
 		getSummary();
 	}
 	
+	// Print the statistics for all counters combined
 	private void totalStatistics() {
 		setup();
          
@@ -68,7 +78,7 @@ public class StatisticsActivity extends Activity {
  		getSummary();
 	}
 
-	
+	// Set up the listview/adapter stuff and fetch counters from file
 	public void setup(){
 		datesAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
 		list = (ListView)findViewById(R.id.stats);
@@ -77,11 +87,10 @@ public class StatisticsActivity extends Activity {
 		try {
 			countersFromFile = StoreData.readFromFile(getApplicationContext());
 			
-			// position only used for counterstats
+			// position only used for counter stats
 			if(position >= 0){
 				counter = countersFromFile.get(position);
 			}
-
 
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -94,8 +103,10 @@ public class StatisticsActivity extends Activity {
 		}
 	}
 	
-	// collect the info for the summary
+	// Collect the info for the summary stats
 	private void getSummary(){
+		
+		// if @ least 1 count get stats for counter
 		if(counter.getCount()>0){
 			datesAdapter.add("By Hour: \n");
 			getHourSummary(counter);
@@ -115,18 +126,20 @@ public class StatisticsActivity extends Activity {
 			datesAdapter.add("By Week: \nNo Counts \n");
 			datesAdapter.add("By Month: \nNo Counts \n");
 		}
+		
+		// probably not necessary but i'm going to leave it in anyway, just in case
 		datesAdapter.notifyDataSetChanged(); 
 	}
 	
-	// print to stats to screen
+	// Print to stats to screen
 	private void printSummary (String dateInfo, int count){
 		datesAdapter.add(dateInfo + " -- " + count + "\n");
 	}
 	
-
-	// for total statistics - compare elements between 2 lists and add them all in order to the first list
+	// For total statistics - compare elements between 2 lists and add them all in order to the first list
 	private static ArrayList<CounterDate> compare(ArrayList<CounterDate> totalList, ArrayList<CounterDate> newList){  
-		int x = 0;
+		
+		int tIndex = 0;
 		
 		// if nothing to add from other list return
 		if(newList.size() == 0){
@@ -134,23 +147,23 @@ public class StatisticsActivity extends Activity {
 		}
 		
 		// for each element in the secondList
-		for(int j = 0; j < newList.size(); j++){
+		for(int nIndex = 0; nIndex < newList.size(); nIndex++){
 			
 			// compare to each element in the firstList
-			if(totalList.get(x).getValue() >= newList.get(j).getValue()){
+			if(totalList.get(tIndex).getValue() >= newList.get(nIndex).getValue()){
 				
-				// if the element in the second list belongs before the element in the first list insert it into first list
-				totalList.add(x, newList.get(j));
+				// if the element in the newlist belongs before the element in the totallist insert it into totallist
+				totalList.add(tIndex, newList.get(nIndex));
 			 }
 			
 			// the the element in the second list is larger than the first list
 			else{
 				
 				// if we reach the end of the first list
-				if(x == totalList.size()-1){
+				if(tIndex == totalList.size()-1){
 					
 					// add the rest of the second list to the first list
-					for(int s = j; s < newList.size(); s++){
+					for(int s = nIndex; s < newList.size(); s++){
 						totalList.add(newList.get(s));
 					}
 					// we are done
@@ -159,10 +172,10 @@ public class StatisticsActivity extends Activity {
 				
 				// if not at the end of the first list then move to the next element of the first list
 				else{
-					x++;
+					tIndex++;
 					
-					// we need to offset j++ since we still have to find a place for the current
-					j--;
+					// we need to offset nIndex++ since we still have to find a place for the current
+					nIndex--;
 				}
 			}
 		}
@@ -170,13 +183,13 @@ public class StatisticsActivity extends Activity {
 		// return the first list with the new members added to it
 		return totalList;
 	}
-
 	
-	//////////////////////////////////////////////////////////////////////////////////////////////////
-	
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// Get individual statistics for different CounterDate attributes
 	// there's got to be a better way of doing this...
 	private void getHourSummary(CounterModel counter){
 		
+		// if only one entry: 
 		if(counter.getCount() == 1){
 			printSummary(counter.getDates().get(0).getMonthString()
 					+" "+ counter.getDates().get(0).getDay()
@@ -184,11 +197,17 @@ public class StatisticsActivity extends Activity {
 					1);
 			return;
 		}
+		
+		// if at least 2 entries:
 		int hourCount = 1;
-		for(int i = 0; i< counter.getCount()-1; i++){
+		for(int i = 0; i < counter.getCount() - 1; i++){
+			
+			// if dates of two count entries match, increase the count (for elements of the same category)
 			if(counter.getDates().get(i).getHour() == counter.getDates().get(i+1).getHour()){
 				hourCount ++;
 			}
+			
+			// if the two entries don't match we can print that section and move on to the next
 			else{
 				printSummary(counter.getDates().get(i).getMonthString()
 						+" "+ counter.getDates().get(i).getDay()
@@ -197,56 +216,61 @@ public class StatisticsActivity extends Activity {
 				hourCount = 1;
 			}
 		}
+		
+		// print the last section manually (b/c of for loop design)
 		printSummary(counter.getDates().get(counter.getCount()-1).getMonthString()
 				+" "+ counter.getDates().get(counter.getCount()-1).getDay()
 				+" "+ counter.getDates().get(counter.getCount()-1).convertHours(),
 				hourCount);
 	}
+	
+	// The rest of these methods are the same as the one above, except they send different strings to printSummary
+	// for each category. 
 	private void getDaySummary(CounterModel counter){
 		
 		if(counter.getCount() == 1){
 			printSummary(counter.getDates().get(0).getMonthString()
-					+" "+counter.getDates().get(0).getDay(),
+					+" "+ counter.getDates().get(0).getDay(),
 					1);
 			return;
 		}
 		int dayCount = 1;
-		for(int i = 0; i< counter.getCount()-1; i++){
+		for(int i = 0; i < counter.getCount() - 1; i++){
 			if(counter.getDates().get(i).getDay() == counter.getDates().get(i+1).getDay()){
 				dayCount ++;
 			}
 			else{
 				printSummary(counter.getDates().get(i).getMonthString()
-						+" "+counter.getDates().get(i).getDay(), 
+						+" "+ counter.getDates().get(i).getDay(), 
 						dayCount);
 				dayCount = 1;
 			}
 		}
 		printSummary(counter.getDates().get(counter.getCount()-1).getMonthString()
-				+" "+counter.getDates().get(counter.getCount()-1).getDay(),
+				+" "+ counter.getDates().get(counter.getCount()-1).getDay(),
 				dayCount);
 	}
 	private void getWeekSummary(CounterModel counter){
 		
 		if(counter.getCount() == 1){
 			printSummary("Week of "+ counter.getDates().get(0).getMonthString() 
-					+ " " + counter.getDates().get(0).getDayOfWeek(),
+					+" "+ counter.getDates().get(0).getDayOfWeek(),
 					1);
 			return;
 		}
 		int weekCount = 1;
-		for(int i = 0; i< counter.getCount()-1; i++){
+		for(int i = 0; i < counter.getCount() - 1; i++){
 			if(counter.getDates().get(i).getWeek() == counter.getDates().get(i+1).getWeek()){
 				weekCount ++;
 			}
 			else{
 				printSummary("Week of "+ counter.getDates().get(i).getMonthString() 
-						+ " " + counter.getDates().get(i).getDayOfWeek(), weekCount);
+						+" "+ counter.getDates().get(i).getDayOfWeek(), weekCount);
 				weekCount = 1;
 			}
 		}
 		printSummary("Week of "+ counter.getDates().get(counter.getCount()-1).getMonthString() 
-				+ " " + counter.getDates().get(counter.getCount()-1).getDayOfWeek(), 
+				+" "+ counter.getDates().get(counter.getCount()-1).getDayOfWeek(), 
 				weekCount);
 	}
 	private void getMonthSummary(CounterModel counter){
@@ -256,7 +280,7 @@ public class StatisticsActivity extends Activity {
 			return;
 		}
 		int monthCount = 1;
-		for(int i = 0; i< counter.getCount()-1; i++){
+		for(int i = 0; i < counter.getCount() - 1; i++){
 			if(counter.getDates().get(i).getMonth() == counter.getDates().get(i+1).getMonth()){
 				monthCount ++;
 			}
@@ -267,18 +291,16 @@ public class StatisticsActivity extends Activity {
 		}
 		printSummary(counter.getDates().get(counter.getCount()-1).getMonthString(), monthCount);
 	}
-	
 
-
+	// Menu only provides a link to homepage (CountersActivity)
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.statistics, menu);
 		return true;
 	}
 	
+	// Handle item selection
 	public boolean onOptionsItemSelected(MenuItem item) {
-	    // Handle item selection
 	    switch (item.getItemId()) {
 	    	case R.id.home_from_stats:
 	    		returnHome();
@@ -289,6 +311,7 @@ public class StatisticsActivity extends Activity {
 	    }
 	}
 	
+	// Return to CountersActivity when home option on menu is clicked
 	public void returnHome(){
 		Intent intent = new Intent(this, CountersActivity.class);
 		startActivity(intent); 
