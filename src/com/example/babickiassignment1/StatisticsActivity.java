@@ -66,7 +66,7 @@ public class StatisticsActivity extends Activity {
             }
 
             // create a new counter of total counts to do counter statistics on 
-            counter = new CounterModel("total");
+            counter = new CounterModel("Total");
             counter.setDate(totalList);
         }
         
@@ -106,6 +106,7 @@ public class StatisticsActivity extends Activity {
 		
 		// if @ least 1 count get stats for counter
 		if(counter.getCount()>0){
+			datesAdapter.add(counter.getName() + " Statistics:\n\n");
 			datesAdapter.add("By Hour: \n");
 			getHourSummary(counter);
 			datesAdapter.add("\n");
@@ -119,6 +120,7 @@ public class StatisticsActivity extends Activity {
 			getMonthSummary(counter);
 		}
 		else{
+			datesAdapter.add(counter.getName() + " Statistics\n\n");
 			datesAdapter.add("By Hour: \nNo Counts \n");
 			datesAdapter.add("By Day: \nNo Counts \n");
 			datesAdapter.add("By Week: \nNo Counts \n");
