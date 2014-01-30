@@ -21,7 +21,7 @@ import android.widget.EditText;
 public class CountersActivity extends Activity {
 	
 	// All current counters are stored in the counters arraylist
-	ArrayList<CounterModel> counters;
+	ArrayList<Counter> counters;
 	ArrayAdapter<String> countersAdapter;
 	ListView countersListView;
 	
@@ -52,7 +52,7 @@ public class CountersActivity extends Activity {
 		
 		// if old data not working or DNE then make a new counters arraylist
 		if(counters == null){
-			counters = new ArrayList<CounterModel>();
+			counters = new ArrayList<Counter>();
 		}
 		
 		// set up the adapter for updating to listview on screen dynamically
@@ -95,7 +95,7 @@ public class CountersActivity extends Activity {
 		
 		// create new counter with specified name
 		EditText newCounterItem = (EditText) findViewById(R.id.newCounterItem);
-		CounterModel addCounter = new CounterModel(newCounterItem.getText().toString());
+		Counter addCounter = new Counter(newCounterItem.getText().toString());
 		
 		// hack-y error checking. WILL REDO IF HAVE TIME.
 		if(addCounter.getName().equals("")){

@@ -29,8 +29,8 @@ public class SelectCounterActivity extends Activity {
 	
 	// Index of counter of interest in the arraylist of counters
 	int position;
-	ArrayList <CounterModel> countersFromFile;
-	CounterModel counter;
+	ArrayList <Counter> countersFromFile;
+	Counter counter;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -195,7 +195,7 @@ public class SelectCounterActivity extends Activity {
 	}
 	
 	// Swaps positions - for sorting
-	private void swap(CounterModel oldCounter, int newPosition){
+	private void swap(Counter oldCounter, int newPosition){
 		countersFromFile.set(position, oldCounter);
 		countersFromFile.set(newPosition, counter);
 		position = newPosition;

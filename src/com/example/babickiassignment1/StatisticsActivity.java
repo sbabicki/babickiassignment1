@@ -20,8 +20,8 @@ public class StatisticsActivity extends Activity {
 	
 	ListView list;
 	ArrayAdapter<String> datesAdapter;
-	ArrayList <CounterModel> countersFromFile;
-	CounterModel counter = null;
+	ArrayList <Counter> countersFromFile;
+	Counter counter = null;
 	int position = -1;
 	
 	@Override
@@ -66,7 +66,7 @@ public class StatisticsActivity extends Activity {
             }
 
             // create a new counter of total counts to do counter statistics on 
-            counter = new CounterModel("Total");
+            counter = new Counter("Total");
             counter.setDate(totalList);
         }
         
@@ -187,7 +187,7 @@ public class StatisticsActivity extends Activity {
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// Get individual statistics for different CounterDate attributes
 	// there's got to be a better way of doing this...
-	private void getHourSummary(CounterModel counter){
+	private void getHourSummary(Counter counter){
 		
 		// if only one entry: 
 		if(counter.getCount() == 1){
@@ -226,7 +226,7 @@ public class StatisticsActivity extends Activity {
 	
 	// The rest of these methods are the same as the one above, except they send different strings to printSummary
 	// for each category. 
-	private void getDaySummary(CounterModel counter){
+	private void getDaySummary(Counter counter){
 		
 		if(counter.getCount() == 1){
 			printSummary(counter.getDates().get(0).getMonthString()
@@ -250,7 +250,7 @@ public class StatisticsActivity extends Activity {
 				+" "+ counter.getDates().get(counter.getCount()-1).getDay(),
 				dayCount);
 	}
-	private void getWeekSummary(CounterModel counter){
+	private void getWeekSummary(Counter counter){
 		
 		if(counter.getCount() == 1){
 			printSummary("Week of "+ counter.getDates().get(0).getMonthString() 
@@ -273,7 +273,7 @@ public class StatisticsActivity extends Activity {
 				+" "+ counter.getDates().get(counter.getCount()-1).getDayOfWeek(), 
 				weekCount);
 	}
-	private void getMonthSummary(CounterModel counter){
+	private void getMonthSummary(Counter counter){
 		
 		if(counter.getCount() == 1){
 			printSummary(counter.getDates().get(0).getMonthString(), 1);

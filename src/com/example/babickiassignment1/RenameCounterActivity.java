@@ -20,8 +20,8 @@ public class RenameCounterActivity extends Activity {
 
 	// Index of counter of interest in the arraylist of counters
 	int position;
-	ArrayList <CounterModel> countersFromFile;
-	CounterModel counter;
+	ArrayList <Counter> countersFromFile;
+	Counter counter;
 		
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

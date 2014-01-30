@@ -21,7 +21,7 @@ public class StoreData {
 	private static final String FILENAME = "goat.sav";
 	
 	// Saves an ArrayList of CounterModels in a file
-	public static int saveInFile(Context context, ArrayList <CounterModel> counters){
+	public static int saveInFile(Context context, ArrayList <Counter> counters){
 		try{
 			// writes over old file
 			FileOutputStream fileOut = context.openFileOutput(FILENAME, Context.MODE_PRIVATE);
@@ -42,14 +42,14 @@ public class StoreData {
 	}
 	
 	// Returns the ArrayList from file
-	public static ArrayList<CounterModel> readFromFile(Context context) throws IOException, ClassNotFoundException {
+	public static ArrayList<Counter> readFromFile(Context context) throws IOException, ClassNotFoundException {
 		
-		ArrayList<CounterModel> counters = null;
+		ArrayList<Counter> counters = null;
 	    
 		try{
 	         FileInputStream fileIn = context.openFileInput(FILENAME);
 	         ObjectInputStream objectIn = new ObjectInputStream(fileIn);
-	         counters = (ArrayList<CounterModel>) objectIn.readObject();
+	         counters = (ArrayList<Counter>) objectIn.readObject();
 	         objectIn.close();
 	         fileIn.close();
 	         return counters;

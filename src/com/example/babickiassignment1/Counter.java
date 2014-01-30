@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * - Each time a CounterDate is added to the arraylist the count is increased
  * - A string must be passed to the constructor to create a new CounterModel 
  */
-public class CounterModel implements Serializable{
+public class Counter implements Serializable{
 
 	// Name of counter
 	private String name;
@@ -18,7 +18,7 @@ public class CounterModel implements Serializable{
 	private ArrayList<CounterDate> datesList;
 	
 	// Constructor
-	public CounterModel(String name) {
+	public Counter(String name) {
 		super();
 		this.name = name;
 		this.datesList = new ArrayList<CounterDate>();
