@@ -3,8 +3,8 @@ babicki-assignment1
 By Sasha Babicki
 
 Special File Locations:
-UML diagram -> /doc/UML.pdf
-Licence -> /LICENCE
+UML diagram -> ./doc/UML.pdf
+Licence -> ./LICENCE
 
 Usage:
 - Retrieve the project by using 
@@ -40,9 +40,9 @@ Select Counter - Update the count and view counter options
 - Select Home from the menu to return to the main page. 
 	
 	
-Assumptions:
-1) All save data from app is created by the app. The sort feature requires this 
-because it sorts when each individual counter is updated.
+Assumptions and Design Decisions:
+1) All save data used by the app is created by the app. The sort feature 
+requires this because it sorts when each individual counter is updated.
 
 2) Duplicates are not handled. Because the count for the counter is also 
 displayed the user is expected to delete or rename duplicates when found, 
@@ -56,4 +56,16 @@ caused by exceptionally long strings.
 4) Total Statistics are calculated using data from current counters state,
 does not include any information about deleted counters or data from before
 a counter is reset.
+
+5) The "Week of" section of statistics uses a day that is a multiple of 7
+to determine the first day of the week. For instance, the first week of any
+year would be displayed as "Week of January 1" and the second week of any 
+year would be "Week of January 7".
+
+
+Sources:
+- I used the FillerCreep app example for inspiration on how to create my app. 
+- I also used the todo app example at 
+https://github.com/thecodepath/android_guides/wiki for information on how 
+to use listviews. 
 
