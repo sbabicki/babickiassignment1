@@ -37,6 +37,9 @@ public class CounterDate implements Serializable{
 		if(hour>12){
 			return getHour() - 12 + ":00 PM";
 		}
+		else if(hour ==12){
+			return "12:00pm";
+		}
 		else if(hour == 0){
 			return "12:00 AM";
 		}
